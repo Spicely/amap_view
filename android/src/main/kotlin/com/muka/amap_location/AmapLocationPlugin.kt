@@ -1,15 +1,16 @@
 package com.muka.amap_location
 
-import android.R
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.graphics.Color
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.app.NotificationCompat
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -29,9 +30,7 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
   private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
   private var eventSink: EventChannel.EventSink? = null
   private lateinit var watchClient: AMapLocationClient
-  private val NOTIFICATION_CHANNEL_NAME = "BackgroundLocation"
-  private var notificationManager: NotificationManager? = null
-  var isCreateChannel = false
+  private val channelId: String = "plugins.muka.com/amap_location_server"
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -89,7 +88,6 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
       "start" -> {
         var mode: Any? = call.argument("mode")
         var time: Int = call.argument<Int>("time") ?: 2000
-        var background: Boolean? = call.argument("background")
         var locationOption = AMapLocationClientOption()
         locationOption.locationMode = when(mode) {
           1 -> AMapLocationClientOption.AMapLocationMode.Battery_Saving
@@ -99,14 +97,19 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
         locationOption.interval = time.toLong();
         watchClient.setLocationOption(locationOption)
         watchClient.startLocation()
-        if (background!!) {
-          watchClient.enableBackgroundLocation(2008071, buildNotification())
-        }
         result.success(null)
       }
       "stop" -> {
         watchClient.stopLocation()
         watchClient.setLocationListener(null)
+        result.success(null)
+      }
+      "enableBackground" -> {
+        watchClient.enableBackgroundLocation(1, buildNotification(call.argument("title")?:"",call.argument("label")?:"", call.argument("assetName")?:"",call.argument<Boolean>("vibrate")!!))
+        result.success(null)
+      }
+      "disableBackground" -> {
+        watchClient.disableBackgroundLocation(true)
         result.success(null)
       }
       else -> {
@@ -115,37 +118,31 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
     }
   }
 
-  private fun buildNotification(): Notification? {
-    var builder: Notification.Builder? = null
-    var notification: Notification? = null
-    if (Build.VERSION.SDK_INT >= 26) {
-      //Android O上对Notification进行了修改，如果设置的targetSDKVersion>=26建议使用此种方式创建通知栏
-      if (null == notificationManager) {
-//        notificationManager = getSystemService<Any>(Context.NOTIFICATION_SERVICE) as NotificationManager?
-      }
-      val channelId: String = "plugins.muka.com/amap_location_server"
-      if (!isCreateChannel) {
-        val notificationChannel = NotificationChannel(channelId,
-                NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-        notificationChannel.enableLights(true) //是否在桌面icon右上角展示小圆点
-        notificationChannel.lightColor = Color.BLUE //小圆点颜色
-        notificationChannel.setShowBadge(true) //是否在久按桌面图标时显示此渠道的通知
-        notificationManager?.createNotificationChannel(notificationChannel)
-        isCreateChannel = true
-      }
-      builder = Notification.Builder(pluginBinding.applicationContext, channelId)
-    } else {
-      builder = Notification.Builder(pluginBinding.applicationContext)
+  private fun buildNotification(title: String, label: String, name: String, vibrate: Boolean): Notification? {
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      var notificationChannel = NotificationChannel(channelId, "test", NotificationManager.IMPORTANCE_HIGH);
+      val notificationManager = pluginBinding.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+      notificationManager.createNotificationChannel(notificationChannel);
     }
-    builder
-            .setContentText("正在后台运行")
-            .setWhen(System.currentTimeMillis())
-    notification = if (Build.VERSION.SDK_INT >= 16) {
-      builder.build()
-    } else {
-      return builder.notification
+    var intent = Intent(pluginBinding.applicationContext, this.javaClass)
+    var pendingIntent = PendingIntent.getActivity(pluginBinding.applicationContext,0, intent, 0)
+
+    var notification = NotificationCompat.Builder(pluginBinding.applicationContext,  channelId).
+    setContentTitle(title).
+    setContentText(label).
+    setWhen(System.currentTimeMillis()).
+    setSmallIcon(getDrawableResourceId(name)).
+    setLargeIcon(BitmapFactory.decodeResource(pluginBinding.applicationContext.resources, getDrawableResourceId(name))).
+    setContentIntent(pendingIntent)
+    if (!vibrate) {
+      notification.setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
     }
-    return notification
+    return notification.build()
+  }
+
+  private fun getDrawableResourceId(name: String): Int {
+    return pluginBinding.applicationContext.resources.getIdentifier(name, "drawable", pluginBinding.applicationContext.packageName)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

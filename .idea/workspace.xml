@@ -6,80 +6,7 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49739ab6-bee6-4d3c-b3b4-e0bbe890e9c5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/flutter-amap-view.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.metadata" beforeDir="false" afterPath="$PROJECT_DIR$/.metadata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amap_view.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapLocationFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapNaviActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapNaviFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapOptionsSink.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapSearchFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapUtilsFactory.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/AmapViewPlugin.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/Convert.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/MarkerController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/Options.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/laoqiu/amap_view/PolylineController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/res/layout/activity_basic_navi.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/.metadata" beforeDir="false" afterPath="$PROJECT_DIR$/example/.metadata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/laoqiu/amap_view_example/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/muka/example/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/test/widget_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapLocationFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapNavFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapNaviViewController.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapOptionsSink.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapSearchFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapViewController.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapViewFactory.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapViewPlugin.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/AmapViewPlugin.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Convert.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/MarkerController.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/Options.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SpeechSynthesizer.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftAmapViewPlugin.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/amap_view.podspec" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/amap_view.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/bitmap.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/camera.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/controller.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/location.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/map.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/marker.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/navi.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/polyline.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/search.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/ui.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/utils.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/amap_view_test.dart" beforeDir="false" />
-    </list>
+    <list default="true" id="49739ab6-bee6-4d3c-b3b4-e0bbe890e9c5" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +59,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

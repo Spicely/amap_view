@@ -36,13 +36,11 @@ class AmapLocation {
   static Future<Future<Null> Function()> start({
     @required AmapLocationListen listen,
     AmapLocationMode mode = AmapLocationMode.HIGHT_ACCURACY,
-    int time,
-    bool background,
+    int time
   }) async {
     await _channel.invokeMethod('start', {
       'mode': mode.index,
       'time': time ?? 2000,
-      'background': background ?? false
     });
     _event.receiveBroadcastStream().listen((dynamic data) {
       listen(Location.fromJson(data));
@@ -50,6 +48,29 @@ class AmapLocation {
     return () async {
       await _channel.invokeMethod('stop');
     };
+  }
+
+  /// 启动后台服务
+  static Future<void> enableBackground({
+    @required String title,
+    @required String label,
+    @required String assetName,
+    bool vibrate
+  }) async {
+    assert(title != null);
+    assert(label != null);
+    assert(assetName != null);
+    await _channel.invokeMethod('enableBackground', {
+      'title': title,
+      'label': label,
+      'assetName': assetName,
+      'vibrate': vibrate ?? true
+    });
+  }
+
+  /// 关闭后台服务
+  static Future<void> disableBackground() async {
+    await _channel.invokeMethod('disableBackground');
   }
 }
 

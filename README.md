@@ -2,13 +2,65 @@
 
 Flutter高德定位插件
 
-## Getting Started
+## Android
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+在`AndroidManifest.xml`添加如下代码
+`
+ <meta-data android:name="com.amap.api.v2.apikey" android:value="你的key" />
+`
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## IOS
+
+在`Info.plist`添加如下代码
+
+```
+    // 默认
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>App需要您的同意,才能访问位置</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>App需要您的同意,才能访问位置</string>
+    <key>amap_key</key>
+    <string>  你的key  </string>
+
+    // 导航
+    <key>UIBackgroundModes</key> 
+    <array> 
+        <string>location</string>
+        <string>audio</string> 
+    </array>
+```
+
+#### AmapLocation
+
+```
+    /// 持续定位
+    stopLocation = await AmapLocation.start(
+        listen: (Location location) {
+            print(location.toJson());
+        },
+    );
+    
+    /// 停止定位
+    stopLocation();
+
+    /// 单次定位
+    Location location = await AmapLocation.fetchLocation();
+    print(location.toJson());
+
+    /// 后台定位
+    @override
+    void didChangeAppLifecycleState(AppLifecycleState state) async {
+        switch (state) {
+        case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+            break;
+        case AppLifecycleState.resumed: // 应用程序可见，前台
+            await AmapLocation.disableBackground();
+            break;
+        case AppLifecycleState.paused: // 应用程序不可见，后台
+            await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图',vibrate: false);
+            break;
+        default:
+            break;
+        }
+    }
+```
