@@ -1,6 +1,6 @@
-# amap_view_example
+# amap_location_example
 
-Demonstrates how to use the amap_view plugin.
+Demonstrates how to use the amap_location plugin.
 
 ## Getting Started
 

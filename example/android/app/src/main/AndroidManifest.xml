@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.laoqiu.amap_view_example">
+    package="com.muka.amap_location_example">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -7,11 +7,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="amap_view_example"
+        android:label="amap_location_example"
         android:icon="@mipmap/ic_launcher">
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="d725d072f587a82f8a78a6aeb5d005b7" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -46,5 +43,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="d725d072f587a82f8a78a6aeb5d005b7" />
     </application>
 </manifest>

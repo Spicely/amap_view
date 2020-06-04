@@ -1,5 +1,5 @@
-name: amap_view
-description: A new Flutter plugin.
+name: amap_location
+description: Flutter高德定位插件
 version: 0.0.1
 author:
 homepage:
@@ -28,10 +28,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.laoqiu.amap_view
-        pluginClass: AmapViewPlugin
+        package: com.muka.amap_location
+        pluginClass: AmapLocationPlugin
       ios:
-        pluginClass: AmapViewPlugin
+        pluginClass: AmapLocationPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
