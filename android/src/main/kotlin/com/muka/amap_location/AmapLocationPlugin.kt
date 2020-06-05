@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
@@ -20,6 +21,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import kotlin.random.Random
 
 
 /** AmapLocationPlugin */
@@ -30,7 +32,8 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
   private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
   private var eventSink: EventChannel.EventSink? = null
   private lateinit var watchClient: AMapLocationClient
-  private val channelId: String = "plugins.muka.com/amap_location_server"
+  private var channelId: String = "plugins.muka.com/amap_location_server"
+  private var notificationManager: NotificationManager? = null
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -101,15 +104,15 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
       }
       "stop" -> {
         watchClient.stopLocation()
-        watchClient.setLocationListener(null)
         result.success(null)
       }
       "enableBackground" -> {
-        watchClient.enableBackgroundLocation(1, buildNotification(call.argument("title")?:"",call.argument("label")?:"", call.argument("assetName")?:"",call.argument<Boolean>("vibrate")!!))
+        watchClient.enableBackgroundLocation(2001, buildNotification(call.argument("title")?:"",call.argument("label")?:"", call.argument("assetName")?:"",call.argument<Boolean>("vibrate")!!))
         result.success(null)
       }
       "disableBackground" -> {
         watchClient.disableBackgroundLocation(true)
+        notificationManager?.deleteNotificationChannel(channelId)
         result.success(null)
       }
       else -> {
@@ -121,12 +124,21 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
   private fun buildNotification(title: String, label: String, name: String, vibrate: Boolean): Notification? {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      var notificationChannel = NotificationChannel(channelId, "test", NotificationManager.IMPORTANCE_HIGH);
-      val notificationManager = pluginBinding.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-      notificationManager.createNotificationChannel(notificationChannel);
+      var notificationChannel = NotificationChannel(channelId, pluginBinding.applicationContext.packageName, NotificationManager.IMPORTANCE_HIGH);
+      notificationChannel.enableLights(true) //是否在桌面icon右上角展示小圆点
+      notificationChannel.lightColor = Color.BLUE //小圆点颜色
+      notificationChannel.setShowBadge(true) //是否在久按桌面图标时显示此渠道的通知
+
+      if (!vibrate) {
+        notificationChannel.enableVibration(false)
+        notificationChannel.vibrationPattern = null
+        notificationChannel.setSound(null, null)
+      }
+      notificationManager = pluginBinding.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+      notificationManager?.createNotificationChannel(notificationChannel);
     }
-    var intent = Intent(pluginBinding.applicationContext, this.javaClass)
-    var pendingIntent = PendingIntent.getActivity(pluginBinding.applicationContext,0, intent, 0)
+    var intent = Intent(pluginBinding.applicationContext, getMainActivityClass(pluginBinding.applicationContext))
+    var pendingIntent = PendingIntent.getActivity(pluginBinding.applicationContext, Random.nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
     var notification = NotificationCompat.Builder(pluginBinding.applicationContext,  channelId).
     setContentTitle(title).
@@ -139,6 +151,18 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
       notification.setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
     }
     return notification.build()
+  }
+
+  private fun getMainActivityClass(context: Context): Class<*>? {
+    val packageName = context.packageName
+    val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
+    val className = launchIntent.component.className
+    return try {
+      Class.forName(className)
+    } catch (e: ClassNotFoundException) {
+      e.printStackTrace()
+      null
+    }
   }
 
   private fun getDrawableResourceId(name: String): Int {

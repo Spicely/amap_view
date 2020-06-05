@@ -44,23 +44,34 @@ Flutter高德定位插件
     stopLocation();
 
     /// 单次定位
-    Location location = await AmapLocation.fetchLocation();
+    Location location = await AmapLocation.fetch();
     print(location.toJson());
 
     /// 后台定位
-    @override
-    void didChangeAppLifecycleState(AppLifecycleState state) async {
-        switch (state) {
-        case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
-            break;
-        case AppLifecycleState.resumed: // 应用程序可见，前台
-            await AmapLocation.disableBackground();
-            break;
-        case AppLifecycleState.paused: // 应用程序不可见，后台
-            await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图',vibrate: false);
-            break;
-        default:
-            break;
+    /// vibrate 属性只支持一次性设置 设置后除非卸载app否则不会变更
+    /// 另一种办法是变更chanlid 但对于定位来说 一般不会变更 暂时不考虑提供参数
+    class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+
+        @override
+        void initState() {
+            super.initState();
+            WidgetsBinding.instance.addObserver(this);
+        }
+
+        @override
+        void didChangeAppLifecycleState(AppLifecycleState state) async {
+            switch (state) {
+            case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
+                break;
+            case AppLifecycleState.resumed: // 应用程序可见，前台
+                await AmapLocation.disableBackground();
+                break;
+            case AppLifecycleState.paused: // 应用程序不可见，后台
+                await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图',vibrate: false);
+                break;
+            default:
+                break;
+            }
         }
     }
 ```
