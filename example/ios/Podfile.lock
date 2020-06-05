@@ -1,0 +1,39 @@
+PODS:
+  - amap_location (0.0.1):
+    - AMapLocation
+    - Flutter
+  - AMapFoundation (1.6.3)
+  - AMapLocation (2.6.5):
+    - AMapFoundation (~> 1.6.3)
+  - Flutter (1.0.0)
+  - "permission_handler (5.0.0+hotfix.8)":
+    - Flutter
+
+DEPENDENCIES:
+  - amap_location (from `.symlinks/plugins/amap_location/ios`)
+  - Flutter (from `Flutter`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+
+SPEC REPOS:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+    - AMapFoundation
+    - AMapLocation
+
+EXTERNAL SOURCES:
+  amap_location:
+    :path: ".symlinks/plugins/amap_location/ios"
+  Flutter:
+    :path: Flutter
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+
+SPEC CHECKSUMS:
+  amap_location: fc99a507a8954b9e28dce094fdbe8aa15767768c
+  AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
+  AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  permission_handler: c2a19c5cb3ed2d7054fc4baa8ff1b86f5dcfedfd
+
+PODFILE CHECKSUM: 3eccf478f3c2490730441b4e002c41cbd19c0483
+
+COCOAPODS: 1.9.1

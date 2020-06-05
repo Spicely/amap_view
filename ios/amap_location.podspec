@@ -9,12 +9,15 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Flutter高德定位插件
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/Spicely/amap_view/tree/location'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Spicely' => 'Spicely@outlook.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
+  s.public_header_files = 'Classes/**/*.h'
+  s.static_framework = true
   s.dependency 'Flutter'
+  s.dependency 'AMapLocation'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
