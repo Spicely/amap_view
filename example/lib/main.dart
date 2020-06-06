@@ -43,12 +43,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    if (await Permission.locationAlways.request().isGranted) {
+    // if (await Permission.locationAlways.request().isGranted) {
       location = await AmapLocation.fetch();
       print(location.toJson());
       print('单次定位');
       setState(() {});
-    }
+    // }
   }
 
   @override
