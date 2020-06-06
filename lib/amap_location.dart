@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// 仅Android可用
 enum AmapLocationMode {
   /// 高精度模式
   HIGHT_ACCURACY,

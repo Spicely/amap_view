@@ -2,7 +2,7 @@
 //  AmapLocationFactory.swift
 //  amap_location
 //
-//  Created by QiuLiang Wang on 2019/4/25.
+//  Created by QiuLiang Wang on 2020/6/5.
 //
 
 import Foundation
@@ -15,7 +15,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     private var locationManager: AMapLocationManager
     private var fetchLocationManager: AMapLocationManager
     private var eventSink: FlutterEventSink?
-    private var fetchResult: FlutterResult?
+    private var timer: Timer?
+    private var interval: Int?
+    private var start: Bool = true
+    private var mapLoca: Dictionary<String, Any>?
     
     init(withMessenger messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
@@ -25,7 +28,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         
         locationManager.distanceFilter = 200
         locationManager.delegate = self
-        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.locatingWithReGeocode = true
         
         fetchLocationManager.distanceFilter = 200
         fetchLocationManager.delegate = self
@@ -42,18 +45,59 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     func onMethodCall(methodCall: FlutterMethodCall, result: @escaping FlutterResult) {
         switch methodCall.method {
         case "fetch":
-            fetchLocationManager.locatingWithReGeocode = true
-            fetchResult = result
-            fetchLocationManager.startUpdatingLocation()
+            fetchLocationManager.requestLocation(withReGeocode: false) { (location: CLLocation!,reGeocode: AMapLocationReGeocode!, error: Error!) in
+                if (error != nil) {
+                    return result(error)
+                }
+                if (location != nil) {
+                    var dataMap: Dictionary<String, Any> = ["speed": location.speed ,"altitude": location.altitude, "latitude": location.coordinate.latitude, "longitude": location.coordinate.longitude, "accuracy": location.horizontalAccuracy]
+                    if (reGeocode != nil) {
+                        dataMap["address"] = reGeocode.formattedAddress
+                        dataMap["country"] = reGeocode.country
+                        dataMap["city"] = reGeocode.city
+                        dataMap["street"] = reGeocode.street
+                        dataMap["district"] = reGeocode.district
+                    }
+                    result(dataMap)
+                }
+            }
         case "start":
-            locationManager.locatingWithReGeocode = true
-            locationManager.startUpdatingLocation()
-            result(nil)
+            if let args = methodCall.arguments as? [String: Any] {
+                interval = args["time"] as? Int
+                if (interval == nil) {
+                    interval = 200
+                }
+                timer?.invalidate()
+                start = true
+                timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
+                locationManager.stopUpdatingLocation()
+                locationManager.startUpdatingLocation()
+            } else {
+                result(nil)
+            }
         case "top":
             locationManager.stopUpdatingLocation()
             result(nil)
+        case "enableBackground":
+            locationManager.stopUpdatingLocation()
+            locationManager.allowsBackgroundLocationUpdates = true
+            timer?.invalidate()
+            start = true
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
+            locationManager.startUpdatingLocation()
+            result(nil)
+        case "disableBackground":
+            locationManager.stopUpdatingLocation()
+            locationManager.allowsBackgroundLocationUpdates = false
+            locationManager.startUpdatingLocation()
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
+        }
+    }
+    @objc func sinkLocation() {
+        if (mapLoca != nil) {
+            eventSink?(mapLoca)
         }
     }
     
@@ -76,35 +120,17 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 dataMap["street"] = reGeocode.street
                 dataMap["district"] = reGeocode.district
             }
-            fetchResult?(dataMap)
-            fetchResult = nil
-            eventSink?(dataMap)
+            mapLoca = dataMap
+            if (start) {
+                eventSink?(dataMap)
+                start = false
+            }
+           
         }
     }
     
     func amapLocationManager(_ manager: AMapLocationManager!, doRequireLocationAuth locationManager: CLLocationManager!) {
         locationManager.requestAlwaysAuthorization()
-    }
-    
-    func getCoordType(t: Int?) -> AMapCoordinateType {
-        var coordType: AMapCoordinateType
-        switch t {
-        case 1:
-            coordType = AMapCoordinateType.mapBar
-        case 2:
-            coordType = AMapCoordinateType.mapABC
-        case 3:
-            coordType = AMapCoordinateType.soSoMap
-        case 4:
-            coordType = AMapCoordinateType.aliYun
-        case 5:
-            coordType = AMapCoordinateType.google
-        case 6:
-            coordType = AMapCoordinateType.GPS
-        default:
-            coordType = AMapCoordinateType.baidu
-        }
-        return coordType
     }
     
 }

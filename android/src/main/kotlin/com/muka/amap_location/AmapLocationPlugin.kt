@@ -85,6 +85,7 @@ public class AmapLocationPlugin: FlutterPlugin, MethodCallHandler, EventChannel.
               result.error("AmapError", "onLocationChanged Error: ${it.errorInfo}", it.errorInfo)
             }
           }
+          locationClient.stopLocation()
         }
         locationClient.startLocation()
       }

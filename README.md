@@ -20,9 +20,9 @@ Flutter高德定位插件
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>App需要您的同意,才能访问位置</string>
     <key>amap_key</key>
-    <string>  你的key  </string>
+    <string>你的key</string>
 
-    // 导航
+    // 导航 后台持续定位只需要location
     <key>UIBackgroundModes</key> 
     <array> 
         <string>location</string>
@@ -30,7 +30,7 @@ Flutter高德定位插件
     </array>
 ```
 
-#### AmapLocation
+#### AmapLocation `Android fetch、start方法 可传递mode属性来改变定位方式 IOS不支持`
 
 ```
     /// 持续定位
