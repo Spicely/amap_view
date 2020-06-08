@@ -1,10 +1,10 @@
 import Flutter
 import UIKit
 
-public class SwiftAmapUtilsPlugin: NSObject, FlutterPlugin {
+public class SwiftAmapSearchPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "amap_utils", binaryMessenger: registrar.messenger())
-    let instance = SwiftAmapUtilsPlugin()
+    let channel = FlutterMethodChannel(name: "amap_search", binaryMessenger: registrar.messenger())
+    let instance = SwiftAmapSearchPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

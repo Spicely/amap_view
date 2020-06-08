@@ -1,5 +1,5 @@
-name: amap_utils_example
-description: Demonstrates how to use the amap_utils plugin.
+name: amap_search_example
+description: Demonstrates how to use the amap_search plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  amap_utils:
+  amap_search:
     # When depending on this package from a real application you should use:
-    #   amap_utils: ^x.y.z
+    #   amap_search: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version. 

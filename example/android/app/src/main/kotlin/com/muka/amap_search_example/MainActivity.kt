@@ -1,4 +1,4 @@
-package com.muka.amap_utils_example
+package com.muka.amap_search_example
 
 import io.flutter.embedding.android.FlutterActivity
 

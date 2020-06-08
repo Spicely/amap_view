@@ -1,5 +1,5 @@
-name: amap_utils
-description: Flutter amap工具
+name: amap_search
+description: Flutter amap_search
 version: 0.0.1
 author:
 homepage:
@@ -28,10 +28,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.muka.amap_utils
-        pluginClass: AmapUtilsPlugin
+        package: com.muka.amap_search
+        pluginClass: AmapSearchPlugin
       ios:
-        pluginClass: AmapUtilsPlugin
+        pluginClass: AmapSearchPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

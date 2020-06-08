@@ -1,13 +1,13 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint amap_utils.podspec' to validate before publishing.
+# Run `pod lib lint amap_search.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'amap_utils'
+  s.name             = 'amap_search'
   s.version          = '0.0.1'
-  s.summary          = 'Flutter amap工具'
+  s.summary          = 'Flutter amap_search'
   s.description      = <<-DESC
-Flutter amap工具
+Flutter amap_search
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }

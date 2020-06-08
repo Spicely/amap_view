@@ -1,4 +1,4 @@
-group 'com.muka.amap_utils'
+group 'com.muka.amap_search'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -40,4 +40,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.amap.api:search:latest.integration'
+    api 'com.amap.api:3dmap:latest.integration'
 }

@@ -1,4 +1,4 @@
-package com.muka.amap_utils
+package com.muka.amap_search
 
 import androidx.annotation.NonNull;
 
@@ -9,16 +9,17 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
-/** AmapUtilsPlugin */
-public class AmapUtilsPlugin: FlutterPlugin, MethodCallHandler {
+/** AmapSearchPlugin */
+public class AmapSearchPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
+  private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "amap_utils")
+    channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "amap_search")
     channel.setMethodCallHandler(this);
   }
 
@@ -34,8 +35,8 @@ public class AmapUtilsPlugin: FlutterPlugin, MethodCallHandler {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "amap_utils")
-      channel.setMethodCallHandler(AmapUtilsPlugin())
+      val channel = MethodChannel(registrar.messenger(), "amap_search")
+      channel.setMethodCallHandler(AmapSearchPlugin())
     }
   }
 

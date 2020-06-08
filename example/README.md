@@ -1,6 +1,6 @@
-# amap_utils_example
+# amap_search_example
 
-Demonstrates how to use the amap_utils plugin.
+Demonstrates how to use the amap_search plugin.
 
 ## Getting Started
 
