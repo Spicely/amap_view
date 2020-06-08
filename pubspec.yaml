@@ -1,5 +1,5 @@
-name: amap_location
-description: Flutter高德定位插件
+name: amap_utils
+description: Flutter amap工具
 version: 0.0.1
 author:
 homepage:
@@ -28,10 +28,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.muka.amap_location
-        pluginClass: AmapLocationPlugin
+        package: com.muka.amap_utils
+        pluginClass: AmapUtilsPlugin
       ios:
-        pluginClass: AmapLocationPlugin
+        pluginClass: AmapUtilsPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

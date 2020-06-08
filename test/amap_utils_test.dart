@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:amap_location/amap_location.dart';
+import 'package:amap_utils/amap_utils.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('amap_location');
+  const MethodChannel channel = MethodChannel('amap_utils');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await AmapLocation.fetch(), '42');
+    expect(await AmapUtils.platformVersion, '42');
   });
 }
