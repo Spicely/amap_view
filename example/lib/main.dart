@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         await AmapLocation.disableBackground();
         break;
       case AppLifecycleState.paused: // 应用程序不可见，后台
-        await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图',vibrate: false);
+        await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图', vibrate: false);
         break;
       default:
         break;
@@ -43,12 +43,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    // if (await Permission.locationAlways.request().isGranted) {
+    if (await Permission.locationAlways.request().isGranted) {
       location = await AmapLocation.fetch();
       print(location.toJson());
       print('单次定位');
       setState(() {});
-    // }
+    }
   }
 
   @override
@@ -89,6 +89,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                     print('持续定位');
                   },
                 );
+              },
+            ),
+            RaisedButton(
+              child: Text('地址转换'),
+              onPressed: () async {
+                // LatLng pos = await AmapLocation.convert(latLng: LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
+                // print(pos);
               },
             ),
           ],
