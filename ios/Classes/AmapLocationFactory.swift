@@ -8,23 +8,30 @@
 import Foundation
 import AMapFoundationKit
 import AMapLocationKit
+import AMapSearchKit
 
 
-class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamHandler {
+class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamHandler, AMapSearchDelegate {
     private var messenger: FlutterBinaryMessenger
     private var locationManager: AMapLocationManager
     private var fetchLocationManager: AMapLocationManager
+    private var search: AMapSearchAPI
     private var eventSink: FlutterEventSink?
     private var timer: Timer?
     private var interval: Int?
     private var start: Bool = true
     private var mapLoca: Dictionary<String, Any>?
+    private var fetchLoca: Dictionary<String, Any>?
+    private var fetchSink: FlutterResult?
     
     init(withMessenger messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
         locationManager = AMapLocationManager()
         fetchLocationManager = AMapLocationManager()
+        search = AMapSearchAPI()
         super.init()
+        
+        search.delegate = self
         
         locationManager.distanceFilter = 200
         locationManager.delegate = self
@@ -45,7 +52,9 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     func onMethodCall(methodCall: FlutterMethodCall, result: @escaping FlutterResult) {
         switch methodCall.method {
         case "fetch":
-            fetchLocationManager.requestLocation(withReGeocode: false) { (location: CLLocation!,reGeocode: AMapLocationReGeocode!, error: Error!) in
+            let args = methodCall.arguments as? [String: Any]
+            let geocode = args?["geocode"] as? Bool
+            fetchLocationManager.requestLocation(withReGeocode: true) { (location: CLLocation!,reGeocode: AMapLocationReGeocode!, error: Error!) in
                 if (error != nil) {
                     return result(error)
                 }
@@ -58,7 +67,16 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                         dataMap["street"] = reGeocode.street
                         dataMap["district"] = reGeocode.district
                     }
-                    result(dataMap)
+                    if (geocode == true) {
+                        let request = AMapReGeocodeSearchRequest()
+                        request.location = AMapGeoPoint.location(withLatitude: CGFloat(location.coordinate.latitude), longitude: CGFloat(location.coordinate.longitude))
+                        request.requireExtension = true
+                        self.search.aMapReGoecodeSearch(request)
+                        self.fetchLoca = dataMap
+                        self.fetchSink = result
+                    } else {
+                        result(dataMap)
+                    }
                 }
             }
         case "start":
@@ -72,11 +90,11 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
                 locationManager.stopUpdatingLocation()
                 locationManager.startUpdatingLocation()
-            } else {
-                result(nil)
             }
+            result(nil)
         case "top":
             locationManager.stopUpdatingLocation()
+            timer?.invalidate()
             result(nil)
         case "enableBackground":
             locationManager.stopUpdatingLocation()
@@ -89,6 +107,9 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         case "disableBackground":
             locationManager.stopUpdatingLocation()
             locationManager.allowsBackgroundLocationUpdates = false
+            timer?.invalidate()
+            start = true
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
             locationManager.startUpdatingLocation()
             result(nil)
         default:
@@ -101,8 +122,23 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         }
     }
     
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
+     
+        if response.regeocode == nil {
+            self.fetchSink?(nil)
+            return
+        }
+        if self.fetchLoca == nil {
+            self.fetchSink?(nil)
+            return
+        }
+        self.fetchLoca?["geocode"] = ["towncode": response.regeocode.addressComponent.towncode,"township": response.regeocode.addressComponent.township, "adCode": response.regeocode.addressComponent.adcode, "cityCode": response.regeocode.addressComponent.citycode, "country": response.regeocode.addressComponent.country, "formatAddress": response.regeocode.formattedAddress, "province": response.regeocode.addressComponent.province]
+        self.fetchSink?(self.fetchLoca)
+        
+    }
+    
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-        eventSink = events
+        self.eventSink = events
         return nil
     }
     
@@ -120,10 +156,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 dataMap["street"] = reGeocode.street
                 dataMap["district"] = reGeocode.district
             }
-            mapLoca = dataMap
+            self.mapLoca = dataMap
             if (start) {
-                eventSink?(dataMap)
-                start = false
+                self.eventSink?(dataMap)
+                self.start = false
             }
            
         }

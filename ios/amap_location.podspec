@@ -18,6 +18,7 @@ Flutter高德定位插件
   s.static_framework = true
   s.dependency 'Flutter'
   s.dependency 'AMapLocation'
+  s.dependency 'AMapSearch'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

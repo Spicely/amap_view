@@ -2,6 +2,15 @@
 
 Flutter高德定位插件
 
+## 引入方式
+
+```
+    amap_location:
+        git:
+        url: https://github.com/Spicely/amap_view.git
+        ref: location
+```
+
 ## Android
 
 在`AndroidManifest.xml`添加如下代码
@@ -43,7 +52,7 @@ Flutter高德定位插件
     /// 停止定位
     stopLocation();
 
-    /// 单次定位
+    /// 单次定位 可传递geocode参数获取逆地理编码
     Location location = await AmapLocation.fetch();
     print(location.toJson());
 

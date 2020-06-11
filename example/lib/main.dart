@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:amap_location/amap_location.dart';
 
@@ -34,6 +33,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         await AmapLocation.disableBackground();
         break;
       case AppLifecycleState.paused: // 应用程序不可见，后台
+        print('2222');
         await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图', vibrate: false);
         break;
       default:
@@ -43,12 +43,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    if (await Permission.locationAlways.request().isGranted) {
-      location = await AmapLocation.fetch(geocode: true);
-      print(location.geocode?.toJson());
-      print('单次定位');
-      setState(() {});
-    }
+    // if (await Permission.locationAlways.request().isGranted) {
+    location = await AmapLocation.fetch(geocode: true);
+    print(location.geocode?.toJson());
+    print('单次定位');
+    setState(() {});
+    // }
   }
 
   @override
@@ -66,9 +66,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             RaisedButton(
               child: Text('停止定位'),
               onPressed: () async {
-                print('停止定位');
                 if (stopLocation != null) {
-                  stopLocation();
+                  await stopLocation();
+                  print('停止定位');
                 }
               },
             ),
@@ -83,10 +83,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             RaisedButton(
               child: Text('持续定位'),
               onPressed: () async {
+                print('持续定位');
                 stopLocation = await AmapLocation.start(
                   listen: (Location location) {
                     print(location.toJson());
-                    print('持续定位');
+                    print('持续定位222');
                   },
                 );
               },
