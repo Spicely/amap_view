@@ -8,8 +8,9 @@
   <component name="ChangeListManager">
     <list default="true" id="49739ab6-bee6-4d3c-b3b4-e0bbe890e9c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/amap_location.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/amap_location.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/location.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/location.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/muka/amap_location/AmapLocationPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/muka/amap_location/AmapLocationPlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/muka/amap_location/Convert.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/muka/amap_location/Convert.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

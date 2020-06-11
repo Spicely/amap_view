@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -76,7 +77,8 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
 
     override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
         if (p0 != null && p1 == 1000 && locaPos != null) {
-            locaPos!!["regeocode"] = Convert.toJson(p0)
+            locaPos!!["geocode"] = Convert.toJson(p0)
+            Log.d("22", locaPos.toString())
             geocodeSink?.success(locaPos)
         } else  {
             geocodeSink?.error("AmapError", "onLocationChanged Error: null", null)

@@ -46,7 +46,7 @@ Location _$LocationFromJson(Map<dynamic, dynamic> json) {
     country: json['country'] as String,
     district: json['district'] as String,
     street: json['street'] as String,
-    geocode: json['geocode'] as LocationGeocode,
+    geocode: json['geocode'] == null ? null : LocationGeocode.fromJson(json['geocode'] as Map<dynamic, dynamic>),
   );
 }
 
@@ -62,7 +62,6 @@ Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'geocode': instance.geocode,
     };
 
-
 class LocationGeocode {
   final String towncode;
 
@@ -70,13 +69,9 @@ class LocationGeocode {
 
   final String adCode;
 
-  final double streetNumber;
-
   final String cityCode;
 
   final String country;
-
-  final String businessAreas;
 
   final String formatAddress;
 
@@ -84,12 +79,10 @@ class LocationGeocode {
 
   LocationGeocode({
     this.adCode,
-    this.businessAreas,
     this.cityCode,
     this.country,
     this.formatAddress,
     this.province,
-    this.streetNumber,
     this.towncode,
     this.township,
   });
@@ -102,12 +95,10 @@ class LocationGeocode {
 LocationGeocode _$LocationGeocodeFromJson(Map<dynamic, dynamic> json) {
   return LocationGeocode(
     adCode: json['adCode'] as String,
-    businessAreas: json['businessAreas'] as String,
     cityCode: json['cityCode'] as String,
     country: json['country'] as String,
     formatAddress: json['formatAddress'] as String,
     province: json['province'] as String,
-    streetNumber: (json['streetNumber'] as num)?.toDouble(),
     towncode: json['towncode'] as String,
     township: json['township'] as String,
   );
@@ -115,12 +106,10 @@ LocationGeocode _$LocationGeocodeFromJson(Map<dynamic, dynamic> json) {
 
 Map<String, dynamic> _$LocationGeocodeToJson(LocationGeocode instance) => <String, dynamic>{
       'adCode': instance.adCode,
-      'businessAreas': instance.businessAreas,
       'cityCode': instance.cityCode,
       'country': instance.country,
       'formatAddress': instance.formatAddress,
       'province': instance.province,
-      'streetNumber': instance.streetNumber,
       'towncode': instance.towncode,
       'township': instance.township,
     };

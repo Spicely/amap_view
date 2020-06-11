@@ -30,11 +30,9 @@ class Convert {
             data["township"] = location.regeocodeAddress.township
             data["adCode"] = location.regeocodeAddress.adCode
             data["city"] = location.regeocodeAddress.city
-            data["streetNumber"] = location.regeocodeAddress.streetNumber
             data["cityCode"] = location.regeocodeAddress.cityCode
             data["country"] = location.regeocodeAddress.country
             data["district"] = location.regeocodeAddress.district
-            data["businessAreas"] = location.regeocodeAddress.businessAreas
             data["formatAddress"] = location.regeocodeAddress.formatAddress
             data["province"] = location.regeocodeAddress.province
             return data
