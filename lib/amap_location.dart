@@ -1,9 +1,11 @@
-export './location.dart';
+library amap_location;
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './location.dart';
+
+part  './location.dart';
 
 /// 仅Android可用
 enum AmapLocationMode {
