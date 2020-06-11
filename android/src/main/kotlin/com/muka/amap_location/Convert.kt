@@ -2,11 +2,12 @@ package com.muka.amap_location
 
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.DPoint
+import com.amap.api.services.geocoder.RegeocodeResult
 
 
 class Convert {
     companion object {
-        fun toJson(location: AMapLocation): Any {
+        fun toJson(location: AMapLocation): HashMap<String, Any> {
             val data = HashMap<String, Any>()
             data["latitude"] = location.latitude
             data["longitude"] = location.longitude
@@ -20,6 +21,22 @@ class Convert {
             data["district"] = location.district
             data["street"] = location.street
             data["address"] = location.address
+            return data
+        }
+
+        fun toJson(location: RegeocodeResult): HashMap<String, Any> {
+            val data = HashMap<String, Any>()
+            data["towncode"] = location.regeocodeAddress.towncode
+            data["township"] = location.regeocodeAddress.township
+            data["adCode"] = location.regeocodeAddress.adCode
+            data["city"] = location.regeocodeAddress.city
+            data["streetNumber"] = location.regeocodeAddress.streetNumber
+            data["cityCode"] = location.regeocodeAddress.cityCode
+            data["country"] = location.regeocodeAddress.country
+            data["district"] = location.regeocodeAddress.district
+            data["businessAreas"] = location.regeocodeAddress.businessAreas
+            data["formatAddress"] = location.regeocodeAddress.formatAddress
+            data["province"] = location.regeocodeAddress.province
             return data
         }
 

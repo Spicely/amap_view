@@ -14,7 +14,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
-import com.amap.api.location.CoordinateConverter
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.geocoder.GeocodeResult
+import com.amap.api.services.geocoder.GeocodeSearch
+import com.amap.api.services.geocoder.RegeocodeQuery
+import com.amap.api.services.geocoder.RegeocodeResult
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
@@ -26,7 +30,7 @@ import kotlin.random.Random
 
 
 /** AmapLocationPlugin */
-public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
+public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler, GeocodeSearch.OnGeocodeSearchListener {
 
     private lateinit var channel: MethodChannel
     private lateinit var eventChannel: EventChannel
@@ -35,6 +39,9 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
     private lateinit var watchClient: AMapLocationClient
     private var channelId: String = "plugins.muka.com/amap_location_server"
     private var notificationManager: NotificationManager? = null
+    private lateinit var geocoderSearch: GeocodeSearch
+    private var geocodeSink: Result? = null
+    private var locaPos : HashMap<String, Any>? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -44,6 +51,8 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "plugins.muka.com/amap_location_event")
         eventChannel.setStreamHandler(this);
         watchClient = AMapLocationClient(flutterPluginBinding.applicationContext)
+        geocoderSearch = GeocodeSearch(flutterPluginBinding.applicationContext);
+        geocoderSearch.setOnGeocodeSearchListener(this)
         watchClient.setLocationListener {
             if (it != null) {
                 if (it.errorCode == 0) {
@@ -65,11 +74,27 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
         }
     }
 
+    override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
+        if (p0 != null && p1 == 1000 && locaPos != null) {
+            locaPos!!["regeocode"] = Convert.toJson(p0)
+            geocodeSink?.success(locaPos)
+        } else  {
+            geocodeSink?.error("AmapError", "onLocationChanged Error: null", null)
+        }
+        geocodeSink = null
+        locaPos = null
+    }
+
+    override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
+        TODO("Not yet implemented")
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "fetch" -> {
                 var mode: Any? = call.argument("mode")
+                var geocode: Boolean = call.argument<Boolean>("geocode") ?: false
                 var locationClient = AMapLocationClient(pluginBinding.applicationContext)
                 var locationOption = AMapLocationClientOption()
                 locationOption.locationMode = when (mode) {
@@ -81,7 +106,14 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
                 locationClient.setLocationListener {
                     if (it != null) {
                         if (it.errorCode == 0) {
-                            result.success(Convert.toJson(it))
+                            if (geocode) {
+                                val query = RegeocodeQuery(LatLonPoint(it.latitude, it.longitude), 200F, GeocodeSearch.AMAP)
+                                geocoderSearch.getFromLocationAsyn(query)
+                                geocodeSink = result
+                                locaPos = Convert.toJson(it)
+                            } else {
+                                result.success(Convert.toJson(it))
+                            }
                         } else {
                             result.error("AmapError", "onLocationChanged Error: ${it.errorInfo}", it.errorInfo)
                         }
@@ -104,20 +136,6 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
                 watchClient.startLocation()
                 result.success(null)
             }
-//            "convert" -> {
-//                var latlng = Convert.toDPoint(call.argument("latlng"))
-//                var coordType = call.argument<Int>("type") ?: 0
-//                if (latlng != null) {
-//                    var point = CoordinateConverter(pluginBinding.applicationContext).from(when (coordType) {
-//                        1 -> CoordinateConverter.CoordType.BAIDU
-//                        2 -> CoordinateConverter.CoordType.GOOGLE
-//                        else -> CoordinateConverter.CoordType.GPS
-//                    }).coord(latlng).convert()
-//                    result.success(Convert.toJson(point))
-//                } else {
-//                    result.success(null)
-//                }
-//            }
             "stop" -> {
                 watchClient.stopLocation()
                 result.success(null)

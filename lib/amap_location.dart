@@ -38,9 +38,11 @@ class AmapLocation {
   /// 单次定位
   static Future<Location> fetch({
     AmapLocationMode mode = AmapLocationMode.HIGHT_ACCURACY,
+    bool geocode = false,
   }) async {
     dynamic location = await _channel.invokeMethod('fetch', {
       'mode': mode.index,
+      'geocode': geocode,
     });
     return Location.fromJson(location);
   }
