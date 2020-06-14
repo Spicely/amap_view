@@ -6,8 +6,7 @@ Flutter高德定位插件
 
 ```
     amap_location:
-        git:
-        url: https://github.com/Spicely/amap_view.git
+        git: https://github.com/Spicely/amap_view.git
         ref: location
 ```
 
