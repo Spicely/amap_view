@@ -137,6 +137,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         
     }
     
+    func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
+        self.fetchSink?(error)
+    }
+    
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         self.eventSink = events
         return nil
