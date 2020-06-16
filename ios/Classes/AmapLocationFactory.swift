@@ -56,7 +56,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             let geocode = args?["geocode"] as? Bool
             fetchLocationManager.requestLocation(withReGeocode: true) { (location: CLLocation!,reGeocode: AMapLocationReGeocode!, error: Error!) in
                 if (error != nil) {
-                    return result(error)
+                    return result(nil)
                 }
                 if (location != nil) {
                     var dataMap: Dictionary<String, Any> = ["speed": location.speed ,"altitude": location.altitude, "latitude": location.coordinate.latitude, "longitude": location.coordinate.longitude, "accuracy": location.horizontalAccuracy]
@@ -138,7 +138,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     }
     
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
-        self.fetchSink?(error)
+        self.fetchSink?(nil)
     }
     
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
@@ -171,6 +171,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     
     func amapLocationManager(_ manager: AMapLocationManager!, doRequireLocationAuth locationManager: CLLocationManager!) {
         locationManager.requestAlwaysAuthorization()
+    }
+    
+    func amapLocationManager(_ manager: AMapLocationManager!, didFailWithError error: Error!) {
+        self.fetchSink?(nil)
     }
     
 }
