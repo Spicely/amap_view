@@ -1,14 +1,18 @@
 import Flutter
-import UIKit
+import AMapFoundationKit
 
 public class SwiftAmapSearchPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "amap_search", binaryMessenger: registrar.messenger())
-    let instance = SwiftAmapSearchPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    
+    if let path = Bundle.main.path(forResource: "Info", ofType: "plist") {
+        let resourceFileDictionary = NSDictionary(contentsOfFile: path)
+        if let key = resourceFileDictionary?.object(forKey: "amap_key") {
+            AMapServices.shared().apiKey = key as? String
+        }
+    }
+    
+    AMapServices.shared().enableHTTPS = true
+    
+    AmapSearchFactory(withMessenger: registrar.messenger()).register()
   }
 }
