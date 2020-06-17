@@ -1,4 +1,4 @@
-import '../location_pois/index.dart';
+import '../location_poi/index.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'index.g.dart';
@@ -19,7 +19,7 @@ class LocationGeocode {
 
   final String province;
 
-  List<LocationPois> pois = [];
+  List<LocationPoi> pois = [];
 
   LocationGeocode({
     this.adCode,

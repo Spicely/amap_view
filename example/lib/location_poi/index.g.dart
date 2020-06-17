@@ -6,8 +6,8 @@ part of 'index.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LocationPois _$LocationPoisFromJson(Map<String, dynamic> json) {
-  return LocationPois(
+LocationPoi _$LocationPoiFromJson(Map<String, dynamic> json) {
+  return LocationPoi(
       json['adcode'] as String,
       json['address'] as String,
       json['businessArea'] as String,
@@ -32,7 +32,7 @@ LocationPois _$LocationPoisFromJson(Map<String, dynamic> json) {
       json['website'] as String);
 }
 
-Map<String, dynamic> _$LocationPoisToJson(LocationPois instance) =>
+Map<String, dynamic> _$LocationPoiToJson(LocationPoi instance) =>
     <String, dynamic>{
       'uid': instance.uid,
       'name': instance.name,

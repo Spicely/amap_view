@@ -15,7 +15,7 @@ class LocationGeocode {
 
   final String province;
 
-  List<LocationPois> pois = [];
+  List<LocationPoi> pois = [];
 
   LocationGeocode({
     this.adCode,
@@ -42,7 +42,7 @@ LocationGeocode _$LocationGeocodeFromJson(Map<dynamic, dynamic> json) {
       province: json['province'] as String,
       towncode: json['towncode'] as String,
       township: json['township'] as String,
-      pois: (json['pois'] as List)?.map((e) => e == null ? null : LocationPois.fromJson(new Map<String, dynamic>.from(e)))?.toList());
+      pois: (json['pois'] as List)?.map((e) => e == null ? null : LocationPoi.fromJson(new Map<String, dynamic>.from(e)))?.toList());
 }
 
 Map<String, dynamic> _$LocationGeocodeToJson(LocationGeocode instance) => <String, dynamic>{

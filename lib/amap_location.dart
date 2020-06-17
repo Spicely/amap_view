@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 part 'src/location/index.dart';
 part 'src/location_geocode/index.dart';
-part 'src/location_pois/index.dart';
+part 'src/location_poi/index.dart';
 
 /// 仅Android可用
 enum AmapLocationMode {

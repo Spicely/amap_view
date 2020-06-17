@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'index.g.dart';
 
 @JsonSerializable()
-class LocationPois {
+class LocationPoi {
   ///POI全局唯一ID
   final String uid;
 
@@ -70,7 +70,7 @@ class LocationPois {
   ///所在商圈
   final String businessArea;
 
-  LocationPois(
+  LocationPoi(
     this.adcode,
     this.address,
     this.businessArea,
@@ -95,7 +95,7 @@ class LocationPois {
     this.website,
   );
 
-  factory LocationPois.fromJson(Map<dynamic, dynamic> json) => _$LocationPoisFromJson(json);
+  factory LocationPoi.fromJson(Map<dynamic, dynamic> json) => _$LocationPoiFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LocationPoisToJson(this);
+  Map<String, dynamic> toJson() => _$LocationPoiToJson(this);
 }
