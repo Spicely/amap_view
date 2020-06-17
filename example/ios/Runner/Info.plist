@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>amap_key</key>
+    <string>39a49aebcca9284aaca2e639e651ba45</string>
 </dict>
 </plist>

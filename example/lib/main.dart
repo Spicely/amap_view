@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:amap_search/amap_search.dart';
 
 void main() {
@@ -50,6 +47,22 @@ class _MyAppState extends State<MyApp> {
               onPressed: () async {
                 double distance = await AmapUtils.calculateLineDistance(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
                 print(distance);
+              },
+            ),
+            RaisedButton(
+              child: Text('获取POI'),
+              onPressed: () async {
+                print('获取POI');
+                List<SearchPoi> pois = await AmapSearch.poiKeywordsSearch('火车站');
+                print(pois.toList());
+              },
+            ),
+            RaisedButton(
+              child: Text('获取输入提示'),
+              onPressed: () async {
+                print('获取输入提示');
+                List<InputTip> pois = await AmapSearch.inputTipsSearch('火车');
+                pois.forEach((element) {print(element.toJson());});
               },
             ),
           ],
