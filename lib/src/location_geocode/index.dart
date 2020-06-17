@@ -33,7 +33,7 @@ class LocationGeocode {
   Map<String, dynamic> toJson() => _$LocationGeocodeToJson(this);
 }
 
-LocationGeocode _$LocationGeocodeFromJson(Map<String, dynamic> json) {
+LocationGeocode _$LocationGeocodeFromJson(Map<dynamic, dynamic> json) {
   return LocationGeocode(
       adCode: json['adCode'] as String,
       cityCode: json['cityCode'] as String,
@@ -42,7 +42,7 @@ LocationGeocode _$LocationGeocodeFromJson(Map<String, dynamic> json) {
       province: json['province'] as String,
       towncode: json['towncode'] as String,
       township: json['township'] as String,
-      pois: (json['pois'] as List)?.map((e) => e == null ? null : LocationPois.fromJson(e as Map<String, dynamic>))?.toList());
+      pois: (json['pois'] as List)?.map((e) => e == null ? null : LocationPois.fromJson(new Map<String, dynamic>.from(e)))?.toList());
 }
 
 Map<String, dynamic> _$LocationGeocodeToJson(LocationGeocode instance) => <String, dynamic>{

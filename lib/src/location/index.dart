@@ -36,7 +36,7 @@ class Location {
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
 
-Location _$LocationFromJson(Map<String, dynamic> json) {
+Location _$LocationFromJson(Map<dynamic, dynamic> json) {
   return Location(
       latitude: (json['latitude'] as num)?.toDouble(),
       longitude: (json['longitude'] as num)?.toDouble(),
@@ -46,7 +46,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
       country: json['country'] as String,
       district: json['district'] as String,
       street: json['street'] as String,
-      geocode: json['geocode'] == null ? null : LocationGeocode.fromJson(json['geocode'] as Map<String, dynamic>));
+      geocode: json['geocode'] == null ? null : LocationGeocode.fromJson(json['geocode'] as Map<dynamic, dynamic>));
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{

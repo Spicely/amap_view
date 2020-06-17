@@ -66,6 +66,12 @@ class LocationPois {
 
   ///所在商圈
   final String businessArea;
+
+  /// 纬度（垂直方向）
+  final double latitude;
+
+  /// 经度（水平方向）
+  final double longitude;
 // ///室内信息
 // @property (nonatomic, strong) AMapIndoorData *indoorData;
 // ///子POI列表
@@ -96,6 +102,8 @@ class LocationPois {
     this.typecode,
     this.uid,
     this.website,
+    this.latitude,
+    this.longitude,
   );
 
   factory LocationPois.fromJson(Map<dynamic, dynamic> json) => _$LocationPoisFromJson(json);
@@ -103,7 +111,7 @@ class LocationPois {
   Map<String, dynamic> toJson() => _$LocationPoisToJson(this);
 }
 
-LocationPois _$LocationPoisFromJson(Map<String, dynamic> json) {
+LocationPois _$LocationPoisFromJson(Map<dynamic, dynamic> json) {
   return LocationPois(
       json['adcode'] as String,
       json['address'] as String,
@@ -126,7 +134,9 @@ LocationPois _$LocationPoisFromJson(Map<String, dynamic> json) {
       json['type'] as String,
       json['typecode'] as String,
       json['uid'] as String,
-      json['website'] as String);
+      json['website'] as String,
+      (json['latitude'] as num)?.toDouble(),
+      (json['longitude'] as num)?.toDouble());
 }
 
 Map<String, dynamic> _$LocationPoisToJson(LocationPois instance) => <String, dynamic>{
@@ -151,5 +161,7 @@ Map<String, dynamic> _$LocationPoisToJson(LocationPois instance) => <String, dyn
       'gridcode': instance.gridcode,
       'direction': instance.direction,
       'hasIndoorMap': instance.hasIndoorMap,
-      'businessArea': instance.businessArea
+      'businessArea': instance.businessArea,
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
     };
