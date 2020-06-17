@@ -5,7 +5,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-part './location.dart';
+part 'src/location/index.dart';
+part 'src/location_geocode/index.dart';
+part 'src/location_pois/index.dart';
 
 /// 仅Android可用
 enum AmapLocationMode {

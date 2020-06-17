@@ -19,7 +19,7 @@ class LocationGeocode {
 
   final String province;
 
-  List<LocationPois> pois  = [];
+  List<LocationPois> pois = [];
 
   LocationGeocode({
     this.adCode,
