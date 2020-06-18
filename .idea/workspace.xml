@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0374b61-6fe3-4c71-aeec-3b15a08302a2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/amap_view.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/amap_view.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Classes/SwiftAmapSearchPlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SwiftAmapSearchPlugin.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/amap_search.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/amap_search.podspec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/amap_search.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/amap_search.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/search.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/search.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/utils.dart" afterDir="false" />
-    </list>
+    <list default="true" id="a0374b61-6fe3-4c71-aeec-3b15a08302a2" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

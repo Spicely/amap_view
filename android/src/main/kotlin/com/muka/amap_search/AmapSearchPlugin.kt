@@ -1,9 +1,13 @@
 package com.muka.amap_search
 
-import androidx.annotation.NonNull;
+import androidx.annotation.NonNull
 import com.amap.api.location.CoordinateConverter
 import com.amap.api.maps.AMapUtils
-
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.geocoder.GeocodeResult
+import com.amap.api.services.geocoder.GeocodeSearch
+import com.amap.api.services.geocoder.RegeocodeQuery
+import com.amap.api.services.geocoder.RegeocodeResult
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -11,8 +15,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
+
 /** AmapSearchPlugin */
-public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler {
+public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler, GeocodeSearch.OnGeocodeSearchListener {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -20,6 +25,7 @@ public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
     private lateinit var utilsChannel: MethodChannel
     private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
+    private lateinit var  regecodeSkin :Result
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         pluginBinding = flutterPluginBinding
@@ -76,6 +82,19 @@ public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler {
                 var distance = AMapUtils.calculateArea(start, end)
                 result.success(distance)
             }
+            "reGeocodeSearch" -> {
+                var latitude = call.argument<Double>("latitude")
+                var longitude = call.argument<Double>("longitude")
+                if (latitude != null && longitude != null) {
+                    var geocoderSearch = GeocodeSearch(this.pluginBinding.applicationContext)
+                    geocoderSearch.setOnGeocodeSearchListener(this)
+                    var query = RegeocodeQuery(LatLonPoint(latitude, longitude), 200F,GeocodeSearch.AMAP);
+                    geocoderSearch.getFromLocationAsyn(query)
+                    this.regecodeSkin = result
+                }
+
+//                result.success(distance)
+            }
             else -> {
                 result.notImplemented()
             }
@@ -85,5 +104,17 @@ public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         utilsChannel.setMethodCallHandler(null)
+    }
+
+    override fun onRegeocodeSearched(result: RegeocodeResult?, rCode: Int) {
+        //解析result获取地址描述信息
+        if (rCode != 1000) {
+            this.regecodeSkin.success(null)
+        }
+        
+    }
+
+    override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
+
     }
 }
