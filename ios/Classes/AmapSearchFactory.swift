@@ -74,7 +74,7 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
                 let latitude = args["latitude"] as? CGFloat
                 let longitude = args["longitude"] as? CGFloat
                 let request = AMapReGeocodeSearchRequest()
-                request.location = AMapGeoPoint.location(withLatitude: latitude, longitude: longitude)
+                request.location = AMapGeoPoint.location(withLatitude: latitude!, longitude: longitude!)
                 request.requireExtension = true
                 reGoecodeSink = result
                 search.aMapReGoecodeSearch(request)
@@ -116,7 +116,7 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
             return reGoecodeSink(nil)
         }
         
-        let gecode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode, "building":response.regeocode.addressComponent.building,"city":response.regeocode.addressComponent.city, "citycode":response.regeocode.addressComponent.citycode, "country":response.regeocode.addressComponent.country,"district":response.regeocode.addressComponent.district,"province":response.regeocode.addressComponent.province,"streetNumber":response.regeocode.addressComponent.streetNumber,"township":response.regeocode.addressComponent.township]
+        let gecode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode, "building":response.regeocode.addressComponent.building,"city":response.regeocode.addressComponent.city, "citycode":response.regeocode.addressComponent.citycode, "country":response.regeocode.addressComponent.country,"district":response.regeocode.addressComponent.district,"province":response.regeocode.addressComponent.province,"streetNumber":response.regeocode.addressComponent.streetNumber as Any,"township":response.regeocode.addressComponent.township]
         reGoecodeSink(gecode)
     }
     

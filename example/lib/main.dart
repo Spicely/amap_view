@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:amap_search/amap_search.dart';
+import 'package:amap_core/amap_core.dart';
 
 void main() {
   runApp(MyApp());

@@ -17,7 +17,7 @@ class AmapUtils {
   /// 地址转换
   static Future<LatLng> convert(LatLng latLng, {ConvertType type = ConvertType.GPS}) async {
     dynamic data = await _channel.invokeMethod('convert', {
-      'latlng': latLng.toMap(),
+      'latlng': latLng.toJson(),
       'type': type.index,
     });
     return LatLng.fromJson(data);
@@ -26,16 +26,16 @@ class AmapUtils {
   /// 直线距离计算
   static Future<double> calculateLineDistance(LatLng start, LatLng end) async {
     return await _channel.invokeMethod('calculateLineDistance', {
-      "start": start?.toMap(),
-      "end": end?.toMap(),
+      "start": start?.toJson(),
+      "end": end?.toJson(),
     });
   }
 
   /// 面积计算
   static Future<double> calculateArea(LatLng start, LatLng end) async {
     return await _channel.invokeMethod('calculateArea', {
-      "start": start?.toMap(),
-      "end": end?.toMap(),
+      "start": start?.toJson(),
+      "end": end?.toJson(),
     });
   }
 }

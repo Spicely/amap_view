@@ -47,4 +47,16 @@ class AmapSearch {
     });
     return List<InputTip>.from(inputTips.map((i) => InputTip.fromJson(i)));
   }
+
+
+  /// 逆地理编码
+  ///
+  /// 请求多次只返回一次 所以尽量请求时给个loading
+  static Future<ReGeocode> reGeocodeSearch(LatLng latLng) async {
+    dynamic reGeocode = await _channel.invokeMethod('reGeocodeSearch', {
+      'latitude': latLng.latitude,
+      'longitude': latLng.longitude,
+    });
+    return ReGeocode.fromJson(reGeocode);
+  }
 }

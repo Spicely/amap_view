@@ -1,13 +1,9 @@
 library amap_search;
 
 import 'dart:async';
-import 'dart:ui';
-
+import 'package:amap_core/amap_core.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+export 'package:amap_core/amap_core.dart';
 
 part 'src/utils.dart';
 part 'src/search.dart';
-part 'src/lat_lng/index.dart';
-part 'src/search_poi/index.dart';
-part 'src/input_tip/index.dart';
