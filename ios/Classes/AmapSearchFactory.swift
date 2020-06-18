@@ -15,6 +15,7 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
     private var search: AMapSearchAPI
     private var serchSink: FlutterResult!
     private var inputSink: FlutterResult!
+    private var reGoecodeSink: FlutterResult!
     
     init(withMessenger messenger: FlutterBinaryMessenger) {
         self.messenger = messenger
@@ -44,8 +45,7 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
                         request.cityLimit = true
                     }
                     if latitude != nil && longitude != nil {
-                        request.location.latitude = latitude!
-                        request.location.longitude = longitude!
+                        request.location = AMapGeoPoint.location(withLatitude: latitude!, longitude: longitude!)
                     }
                     request.requireSubPOIs = true
                     serchSink = result
@@ -68,6 +68,16 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
                     inputSink = result
                     search.aMapInputTipsSearch(request)
                 }
+            }
+        case "reGeocodeSearch":
+            if let args = methodCall.arguments as? [String: Any] {
+                let latitude = args["latitude"] as? CGFloat
+                let longitude = args["longitude"] as? CGFloat
+                let request = AMapReGeocodeSearchRequest()
+                request.location = AMapGeoPoint.location(withLatitude: latitude, longitude: longitude)
+                request.requireExtension = true
+                reGoecodeSink = result
+                search.aMapReGoecodeSearch(request)
             }
         default:
             result(FlutterMethodNotImplemented)
@@ -98,6 +108,16 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
             pois.append(poi)
         }
         inputSink(pois)
+    }
+    
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
+     
+        if response.regeocode == nil {
+            return reGoecodeSink(nil)
+        }
+        
+        let gecode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode, "building":response.regeocode.addressComponent.building,"city":response.regeocode.addressComponent.city, "citycode":response.regeocode.addressComponent.citycode, "country":response.regeocode.addressComponent.country,"district":response.regeocode.addressComponent.district,"province":response.regeocode.addressComponent.province,"streetNumber":response.regeocode.addressComponent.streetNumber,"township":response.regeocode.addressComponent.township]
+        reGoecodeSink(gecode)
     }
     
 }
