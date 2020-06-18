@@ -6,6 +6,8 @@ import 'package:amap_core/amap_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+export 'package:amap_core/amap_core.dart';
+
 /// 仅Android可用
 enum AmapLocationMode {
   /// 高精度模式
