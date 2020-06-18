@@ -2,12 +2,9 @@ library amap_location;
 
 import 'dart:async';
 
+import 'package:amap_core/amap_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-part 'src/location/index.dart';
-part 'src/location_geocode/index.dart';
-part 'src/location_poi/index.dart';
 
 /// 仅Android可用
 enum AmapLocationMode {
