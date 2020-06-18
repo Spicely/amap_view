@@ -1,6 +1,6 @@
 part of amap_core;
 
-class LocationPoi {
+class SearchPoi {
   ///POI全局唯一ID
   final String uid;
 
@@ -79,7 +79,7 @@ class LocationPoi {
 // ///图片列表
 // @property (nonatomic, strong) NSArray<AMapImage *> *images;
 
-  LocationPoi(
+  SearchPoi(
     this.adcode,
     this.address,
     this.businessArea,
@@ -106,13 +106,13 @@ class LocationPoi {
     this.longitude,
   );
 
-  factory LocationPoi.fromJson(Map<dynamic, dynamic> json) => _$LocationPoiFromJson(json);
+  factory SearchPoi.fromJson(Map<dynamic, dynamic> json) => _$SearchPoiFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LocationPoisToJson(this);
+  Map<String, dynamic> toJson() => _$SearchPoiToJson(this);
 }
 
-LocationPoi _$LocationPoiFromJson(Map<dynamic, dynamic> json) {
-  return LocationPoi(
+SearchPoi _$SearchPoiFromJson(Map<dynamic, dynamic> json) {
+  return SearchPoi(
       json['adcode'] as String,
       json['address'] as String,
       json['businessArea'] as String,
@@ -139,7 +139,7 @@ LocationPoi _$LocationPoiFromJson(Map<dynamic, dynamic> json) {
       (json['longitude'] as num)?.toDouble());
 }
 
-Map<String, dynamic> _$LocationPoisToJson(LocationPoi instance) => <String, dynamic>{
+Map<String, dynamic> _$SearchPoiToJson(SearchPoi instance) => <String, dynamic>{
       'uid': instance.uid,
       'name': instance.name,
       'type': instance.type,

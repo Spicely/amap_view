@@ -1,4 +1,4 @@
-part of amap_location;
+part of amap_core;
 
 class Location {
   final double latitude;
@@ -17,7 +17,7 @@ class Location {
 
   final double accuracy;
 
-  final LocationGeocode geocode;
+  final ReGeocode geocode;
 
   Location({
     this.latitude,
@@ -46,7 +46,7 @@ Location _$LocationFromJson(Map<dynamic, dynamic> json) {
       country: json['country'] as String,
       district: json['district'] as String,
       street: json['street'] as String,
-      geocode: json['geocode'] == null ? null : LocationGeocode.fromJson(json['geocode'] as Map<dynamic, dynamic>));
+      geocode: json['geocode'] == null ? null : ReGeocode.fromJson(json['geocode'] as Map<dynamic, dynamic>));
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
