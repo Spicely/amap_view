@@ -116,7 +116,13 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
             return reGoecodeSink(nil)
         }
         
-        let gecode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode, "building":response.regeocode.addressComponent.building,"city":response.regeocode.addressComponent.city, "citycode":response.regeocode.addressComponent.citycode, "country":response.regeocode.addressComponent.country,"district":response.regeocode.addressComponent.district,"province":response.regeocode.addressComponent.province,"streetNumber":response.regeocode.addressComponent.streetNumber as Any,"township":response.regeocode.addressComponent.township]
+        var pois = [Dictionary<String, Any>]()
+        for v in response.regeocode.pois {
+            let poi: Dictionary<String, Any> = ["adcode":v.adcode as Any, "address": v.address as Any, "businessArea": v.businessArea as Any, "city":v.city as Any, "citycode":v.citycode as Any,"direction":v.direction as Any,"distance":v.distance,"district": v.district as Any,"email":v.email as Any,"gridcode":v.gridcode as Any,"hasIndoorMap":v.hasIndoorMap,"name":v.name as Any,"parkingType":v.parkingType as Any,"pcode":v.pcode as Any,"postcode":v.postcode as Any,"province":v.province as Any,"shopID":v.shopID as Any,"tel":v.tel as Any,"type":v.type as Any,"typecode":v.typecode as Any,"uid":v.uid as Any,"website":v.website as Any, "latitude": v.location.latitude, "longitude":v.location.longitude]
+            pois.append(poi)
+        }
+        
+        let gecode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode as Any, "building":response.regeocode.addressComponent.building as Any,"city":response.regeocode.addressComponent.city as Any, "citycode":response.regeocode.addressComponent.citycode as Any,"formatAddress": response.regeocode.formattedAddress as Any, "country":response.regeocode.addressComponent.country as Any,"district":response.regeocode.addressComponent.district as Any,"province":response.regeocode.addressComponent.province as Any,"streetNumber":response.regeocode.addressComponent.streetNumber as Any,"township":response.regeocode.addressComponent.township as Any,"pois": pois]
         reGoecodeSink(gecode)
     }
     
