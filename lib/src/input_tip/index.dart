@@ -1,22 +1,22 @@
 part of amap_search;
 
 class InputTip {
-  ///区域编码
+  /// 区域编码
   final String adcode;
 
-  ///地址
+  /// 地址
   final String address;
 
-  ///区域名称
+  /// 所属区域
   final String district;
 
-  ///名称
+  /// 名称
   final String name;
 
-  ///类型编码
+  /// 类型编码
   final String typecode;
 
-  ///POI全局唯一ID
+  /// POI全局唯一ID
   final String uid;
 
   /// 纬度（垂直方向）
@@ -42,15 +42,8 @@ class InputTip {
 }
 
 InputTip _$InputTipFromJson(Map<dynamic, dynamic> json) {
-  return InputTip(
-      json['uid'] as String,
-      json['name'] as String,
-      json['typecode'] as String,
-      json['address'] as String,
-      json['district'] as String,
-      json['adcode'] as String,
-      (json['latitude'] as num)?.toDouble(),
-      (json['longitude'] as num)?.toDouble());
+  return InputTip(json['uid'] as String, json['name'] as String, json['typecode'] as String, json['address'] as String,
+      json['district'] as String, json['adcode'] as String, (json['latitude'] as num)?.toDouble(), (json['longitude'] as num)?.toDouble());
 }
 
 Map<String, dynamic> _$InputTipToJson(InputTip instance) => <String, dynamic>{
