@@ -17,7 +17,7 @@ class Location {
 
   final double accuracy;
 
-  final ReGeocode geocode;
+  ReGeocode geocode;
 
   Location({
     this.latitude,
