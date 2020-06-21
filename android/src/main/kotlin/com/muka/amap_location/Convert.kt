@@ -24,17 +24,20 @@ class Convert {
             return data
         }
 
-        fun toJson(location: RegeocodeResult): HashMap<String, Any> {
+        fun toJson(result: RegeocodeResult): HashMap<String, Any> {
             val data = HashMap<String, Any>()
-            data["towncode"] = location.regeocodeAddress.towncode
-            data["township"] = location.regeocodeAddress.township
-            data["adCode"] = location.regeocodeAddress.adCode
-            data["city"] = location.regeocodeAddress.city
-            data["cityCode"] = location.regeocodeAddress.cityCode
-            data["country"] = location.regeocodeAddress.country
-            data["district"] = location.regeocodeAddress.district
-            data["formatAddress"] = location.regeocodeAddress.formatAddress
-            data["province"] = location.regeocodeAddress.province
+            data["building"] = result.regeocodeAddress.building
+            data["towncode"] = result.regeocodeAddress.towncode
+            data["township"] = result.regeocodeAddress.township
+            data["adcode"] = result.regeocodeAddress.adCode
+            data["city"] = result.regeocodeAddress.city
+            data["citycode"] = result.regeocodeAddress.cityCode
+            data["neighborhood"] = result.regeocodeAddress.neighborhood
+            data["country"] = result.regeocodeAddress.country
+            data["formatAddress"] = result.regeocodeAddress.formatAddress
+            data["province"] = result.regeocodeAddress.province
+            data["district"] = result.regeocodeAddress.district
+            data["streetNumber"] = result.regeocodeAddress.streetNumber.number
             return data
         }
 
