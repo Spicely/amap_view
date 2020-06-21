@@ -1,70 +1,70 @@
 part of amap_core;
 
 class SearchPoi {
-  ///POI全局唯一ID
+  /// POI全局唯一ID
   final String uid;
 
-  ///名称
+  /// 名称
   final String name;
 
-  ///兴趣点类型
+  /// 兴趣点类型
   final String type;
 
-  ///类型编码
+  /// 类型编码
   final String typecode;
 
-  ///地址
+  /// 地址
   final String address;
 
-  ///电话
+  /// 电话
   final String tel;
 
-  ///距中心点的距离，单位米。在周边搜索时有效
+  /// 距中心点的距离，单位米。在周边搜索时有效
   final double distance;
 
-  ///停车场类型，地上、地下、路边
+  /// 停车场类型，地上、地下、路边
   final String parkingType;
 
-  ///商铺id
+  /// 商铺id
   final String shopID;
 
-  ///邮编
+  /// 邮编
   final String postcode;
 
-  ///网址
+  /// 网址
   final String website;
 
-  ///电子邮件
+  /// 电子邮件
   final String email;
 
-  ///省
+  /// 省
   final String province;
 
-  ///省编码
+  /// 省编码
   final String pcode;
 
-  ///城市名称
+  /// 城市名称
   final String city;
 
-  ///城市编码
+  /// 城市编码
   final String citycode;
 
-  ///区域名称
+  /// 区域名称
   final String district;
 
-  ///区域编码
+  /// 区域编码
   final String adcode;
 
-  ///地理格ID
+  /// 地理格ID
   final String gridcode;
 
-  ///方向
+  /// 方向
   final String direction;
 
-  ///是否有室内地图
+  /// 是否有室内地图
   final bool hasIndoorMap;
 
-  ///所在商圈
+  /// 所在商圈
   final String businessArea;
 
   /// 纬度（垂直方向）
