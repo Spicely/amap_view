@@ -12,16 +12,24 @@ class AmapSearch {
   /// location [如果设置，在此location附近优先返回搜索关键词信息]
   ///
   /// 请求多次只返回一次 所以尽量请求时给个loading
+  /// 
+  /// pageSize 每页返回的个数
+  /// 
+  /// pageNum 第几页
   static Future<List<SearchPoi>> poiKeywordsSearch(
     String keywords, {
     String city,
     LatLng location,
+    int pageSize,
+    int pageNum,
   }) async {
     dynamic pois = await _channel.invokeMethod('poiKeywordsSearch', {
       'keywords': keywords,
       'city': city,
       'latitude': location?.latitude,
       'longitude': location?.longitude,
+      'pageSize': pageSize,
+      'pageNum': pageNum,
     });
     return List<SearchPoi>.from(pois.map((i) => SearchPoi.fromJson(i)));
   }
