@@ -50,7 +50,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     }
 
     func onMethodCall(methodCall: FlutterMethodCall, result: @escaping FlutterResult) {
-        switch methodCall.method {
+        switch methodCall.method {	
         case "fetch":
             let args = methodCall.arguments as? [String: Any]
             let geocode = args?["geocode"] as? Bool
