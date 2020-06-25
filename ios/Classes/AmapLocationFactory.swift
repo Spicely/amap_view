@@ -125,11 +125,11 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
      
         if response.regeocode == nil {
-            self.fetchSink?(nil)
+            fetchSink?(nil)
             return
         }
-        if self.fetchLoca == nil {
-            self.fetchSink?(nil)
+        if fetchLoca == nil {
+            fetchSink?(nil)
             return
         }
         var pois = [Dictionary<String, Any>]()
@@ -137,8 +137,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             let poi: Dictionary<String, Any> = ["adcode":v.adcode as Any, "address": v.address as Any, "businessArea": v.businessArea as Any, "city":v.city as Any, "citycode":v.citycode as Any,"direction":v.direction as Any,"distance":v.distance,"district": v.district as Any,"email":v.email as Any,"gridcode":v.gridcode as Any,"hasIndoorMap":v.hasIndoorMap,"name":v.name as Any,"parkingType":v.parkingType as Any,"pcode":v.pcode as Any,"postcode":v.postcode as Any,"province":v.province as Any,"shopID":v.shopID as Any,"tel":v.tel as Any,"type":v.type as Any,"typecode":v.typecode as Any,"uid":v.uid as Any,"website":v.website as Any, "latitude": v.location.latitude, "longitude":v.location.longitude]
             pois.append(poi)
         }
-        self.fetchLoca?["geocode"] = ["adcode":response.regeocode.addressComponent.adcode as Any, "building":response.regeocode.addressComponent.building as Any,"city":response.regeocode.addressComponent.city as Any, "citycode":response.regeocode.addressComponent.citycode as Any,"formatAddress": response.regeocode.formattedAddress as Any, "country":response.regeocode.addressComponent.country as Any,"district":response.regeocode.addressComponent.district as Any,"province":response.regeocode.addressComponent.province as Any,"streetNumber":response.regeocode.addressComponent.streetNumber as Any,"township":response.regeocode.addressComponent.township as Any,"pois": pois]
-        self.fetchSink?(self.fetchLoca)
+
+        let geocode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode as Any, "building":response.regeocode.addressComponent.building as Any,"city":response.regeocode.addressComponent.city as Any, "citycode":response.regeocode.addressComponent.citycode as Any,"formatAddress": response.regeocode.formattedAddress as Any, "country":response.regeocode.addressComponent.country as Any,"district":response.regeocode.addressComponent.district as Any,"province":response.regeocode.addressComponent.province as Any,"streetNumber":response.regeocode.addressComponent.streetNumber.number as Any,"township":response.regeocode.addressComponent.township as Any,"pois": pois]
+        fetchLoca!["geocode"] = geocode
+        fetchSink?(fetchLoca)
     }
     
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {

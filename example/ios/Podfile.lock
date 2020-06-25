@@ -9,7 +9,7 @@ PODS:
   - AMapSearch (7.3.0):
     - AMapFoundation (~> 1.6.3)
   - Flutter (1.0.0)
-  - "permission_handler (5.0.0+hotfix.8)":
+  - permission_handler (5.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -37,7 +37,7 @@ SPEC CHECKSUMS:
   AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
   AMapSearch: a048bcca3bf0b8083345070e1f193f814bd8dc01
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  permission_handler: c2a19c5cb3ed2d7054fc4baa8ff1b86f5dcfedfd
+  permission_handler: 7022f8972d2d85ce95c1040db945f28bdbfa45d1
 
 PODFILE CHECKSUM: 3eccf478f3c2490730441b4e002c41cbd19c0483
 

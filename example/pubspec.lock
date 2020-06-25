@@ -6,7 +6,7 @@ packages:
     description:
       path: "."
       ref: core
-      resolved-ref: ae24d3cc28dcc14fa6b26b479c525c703481d89f
+      resolved-ref: fa51f548e921d52d12133cb1e24647b3796c25f1
       url: "https://github.com/Spicely/amap_view.git"
     source: git
     version: "0.0.1"
@@ -355,14 +355,14 @@ packages:
       name: permission_handler
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.0.0+hotfix.8"
+    version: "5.0.1"
   permission_handler_platform_interface:
     dependency: transitive
     description:
       name: permission_handler_platform_interface
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   petitparser:
     dependency: transitive
     description:
@@ -411,7 +411,7 @@ packages:
       name: shelf
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.7.5"
+    version: "0.7.7"
   shelf_web_socket:
     dependency: transitive
     description:
