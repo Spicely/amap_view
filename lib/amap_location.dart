@@ -20,6 +20,24 @@ enum AmapLocationMode {
   DEVICE_SENSORS,
 }
 
+/// 仅IOS可用
+enum AmapLocationAccuracy {
+  /// 最快 精确度最底 约秒到
+  THREE_KILOMETERS,
+
+  /// 精确度较低 约秒到
+  KILOMETER,
+
+  /// 精确度较低 约2s
+  HUNDREE_METERS,
+
+  /// 精确度较高 约5s
+  NEAREST_TENMETERS,
+
+  /// 最慢 精确度最高 约8s
+  BEST,
+}
+
 enum ConvertType {
   /// GPS
   GPS,
@@ -39,24 +57,44 @@ class AmapLocation {
   static const _event = EventChannel('plugins.muka.com/amap_location_event');
 
   /// 单次定位
+  ///
+  /// mode 定位方式 [ 仅适用android ]
+  ///
+  /// geocode 返回逆编码信息
+  ///
+  /// accuracy 精确度 [ 仅适用ios ]
   static Future<Location> fetch({
     AmapLocationMode mode = AmapLocationMode.HIGHT_ACCURACY,
     bool geocode = false,
+    AmapLocationAccuracy accuracy = AmapLocationAccuracy.THREE_KILOMETERS,
   }) async {
     dynamic location = await _channel.invokeMethod('fetch', {
       'mode': mode.index,
       'geocode': geocode,
+      'accuracy': accuracy.index,
     });
     return Location.fromJson(location);
   }
 
   /// 持续定位
-  /// 间隔时间 默认 2000
-  static Future<Future<Null> Function()> start(
-      {@required AmapLocationListen listen, AmapLocationMode mode = AmapLocationMode.HIGHT_ACCURACY, int time}) async {
+  ///
+  /// time 间隔时间 默认 2000
+  ///
+  /// mode 定位方式 [ 仅适用android ]
+  ///
+  /// geocode 返回逆编码信息
+  ///
+  /// accuracy 精确度 [ 仅适用ios ]
+  static Future<Future<Null> Function()> start({
+    @required AmapLocationListen listen,
+    AmapLocationMode mode = AmapLocationMode.HIGHT_ACCURACY,
+    int time,
+    AmapLocationAccuracy accuracy = AmapLocationAccuracy.THREE_KILOMETERS,
+  }) async {
     await _channel.invokeMethod('start', {
       'mode': mode.index,
       'time': time ?? 2000,
+      'accuracy': accuracy.index,
     });
     _event.receiveBroadcastStream().listen((dynamic data) {
       listen(Location.fromJson(data));

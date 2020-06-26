@@ -54,6 +54,24 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         case "fetch":
             let args = methodCall.arguments as? [String: Any]
             let geocode = args?["geocode"] as? Bool
+            var accuracy = args?["accuracy"] as? Int
+            if (accuracy == nil) {
+                accuracy = 0
+            }
+            // 定位精度
+            switch accuracy {
+                case 1:
+                    fetchLocationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+                case 2:
+                    fetchLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                case 3:
+                    fetchLocationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                case 4:
+                    fetchLocationManager.desiredAccuracy = kCLLocationAccuracyBest
+                default:
+                    fetchLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+            }
+            
             fetchLocationManager.requestLocation(withReGeocode: true) { (location: CLLocation!,reGeocode: AMapLocationReGeocode!, error: Error!) in
                 if (error != nil) {
                     return result(nil)
@@ -84,6 +102,23 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 interval = args["time"] as? Int
                 if (interval == nil) {
                     interval = 200
+                }
+                var accuracy = args["accuracy"] as? Int
+                if (accuracy == nil) {
+                    accuracy = 0
+                }
+                // 定位精度
+                switch accuracy {
+                    case 1:
+                        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+                    case 2:
+                        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                    case 3:
+                        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                    case 4:
+                        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                    default:
+                        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
                 }
                 timer?.invalidate()
                 start = true
