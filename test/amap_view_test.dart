@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:amap_search/amap_search.dart';
+import 'package:amap_view/amap_view.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('amap_search');
+  const MethodChannel channel = MethodChannel('amap_view');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    // expect(await AmapSearch.platformVersion, '42');
+    // expect(await AmapView.platformVersion, '42');
   });
 }

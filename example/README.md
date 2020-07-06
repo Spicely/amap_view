@@ -1,6 +1,6 @@
-# amap_search_example
+# amap_view_example
 
-Demonstrates how to use the amap_search plugin.
+Demonstrates how to use the amap_view plugin.
 
 ## Getting Started
 

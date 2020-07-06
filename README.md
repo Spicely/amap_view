@@ -1,14 +1,6 @@
-# amap_utils
+# amap_view
 
-Flutter amap_search
-
-## 引入
-
-```
-    amap_search:
-        git: https://github.com/Spicely/amap_view.git
-        ref: 'amap_search'
-```
+高德地图 地图插件
 
 ## Android
 
@@ -22,21 +14,20 @@ Flutter amap_search
 在`Info.plist`添加如下代码
 
 ```
+    // 默认
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>App需要您的同意,才能访问位置</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>App需要您的同意,才能访问位置</string>
+    <key>io.flutter.embedded_views_preview</key>
+	<true/>
     <key>amap_key</key>
-    <string>你的key</string>
-```
+    <string>  你的key  </string>
 
-### 示例
-```
-    /// 坐标转换
-    LatLng pos = await AmapUtils.convert(LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
-    print(pos);
-
-    /// 面积
-    double area = await AmapUtils.calculateArea(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
-    print(area);
-
-    /// 直线距离
-    double distance = await AmapUtils.calculateLineDistance(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
-    print(distance);
+    // 导航
+    <key>UIBackgroundModes</key> 
+    <array> 
+        <string>location</string>
+        <string>audio</string> 
+    </array>
 ```
