@@ -1,7 +1,5 @@
 library amap_core;
 
-import 'package:flutter/material.dart';
-
 part 'src/search_poi/index.dart';
 part 'src/lat_lng/index.dart';
 part 'src/input_tip/index.dart';

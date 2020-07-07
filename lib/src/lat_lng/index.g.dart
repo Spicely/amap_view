@@ -1,21 +1,6 @@
-part of amap_core;
-// import "package:json_annotation/json_annotation.dart";
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
-// part 'index.g.dart';
-
-// @JsonSerializable()
-class LatLng {
-  LatLng(this.latitude, this.longitude)
-      : assert(latitude != null),
-        assert(longitude != null);
-
-  final double latitude;
-  final double longitude;
-
- factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LatLngToJson(this);
-}
+part of 'index.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
