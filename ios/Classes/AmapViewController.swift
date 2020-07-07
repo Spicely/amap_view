@@ -9,15 +9,20 @@ import Flutter
 import AMapNaviKit
 
 class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, AmapOptionsSink {
+    func setIndoorMap(indoorEnabled: Bool) {
+        
+    }
     
     
     private var _frame: CGRect
     private var mapView: MAMapView
     private var channel: FlutterMethodChannel
-//    private var markerController: MarkerController
+    private var markerController: MarkerController
     
     init(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger) {
         
+        // 解决 Failed to bind EAGLDrawable 错误
+        // 如果frame是zeroed，则初始化一个宽高
         if (frame.width == 0 || frame.height == 0) {
             _frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         } else {
@@ -29,15 +34,14 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         channel = FlutterMethodChannel(name: "plugins.muka.com/amap_view_\(viewId)", binaryMessenger: messenger)
         
-//        markerController = MarkerController(withChannel: channel, withMap: mapView)
+        markerController = MarkerController(withChannel: channel, withMap: mapView)
         
         super.init()
         
         channel.setMethodCallHandler(onMethodCall)
         
         mapView.delegate = self
-        print("-----------------22---------------3----------4----------------")
-        print(args as Any)
+        
         // 处理参数
         if let args = args as? [String: Any] {
             Convert.interpretMapOptions(options: args["options"], delegate: self)
@@ -58,19 +62,19 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
                 Convert.interpretMapOptions(options: args["options"], delegate: self)
             }
             result(nil)
-//        case "markers#update":
-//            if let args = methodCall.arguments as? [String: Any] {
-//                if let markersToAdd = (args["markersToAdd"] as? [Any]) {
-//                    markerController.addMarkers(markersToAdd: markersToAdd)
-//                }
-//                if let markersToChange = args["markersToChange"] as? [Any] {
-//                    markerController.changeMarkers(markersToChange: markersToChange)
-//                }
-//                if let markerIdsToRemove = args["markerIdsToRemove"] as? [Any] {
-//                    markerController.removeMarkers(markerIdsToRemove: markerIdsToRemove)
-//                }
-//            }
-//            result(nil)
+        case "markers#update":
+            if let args = methodCall.arguments as? [String: Any] {
+                if let markersToAdd = (args["markersToAdd"] as? [Any]) {
+                    markerController.addMarkers(markersToAdd: markersToAdd)
+                }
+                if let markersToChange = args["markersToChange"] as? [Any] {
+                    markerController.changeMarkers(markersToChange: markersToChange)
+                }
+                if let markerIdsToRemove = args["markerIdsToRemove"] as? [Any] {
+                    markerController.removeMarkers(markerIdsToRemove: markerIdsToRemove)
+                }
+            }
+            result(nil)
         case "camera#update":
             result(nil)
         default:
@@ -80,7 +84,7 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     
     func updateInitialMarkers(options: Any?) {
         if let markers = options as? [Any] {
-//            markerController.addMarkers(markersToAdd: markers)
+            markerController.addMarkers(markersToAdd: markers)
         }
     }
     
@@ -110,10 +114,10 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     
     // 地图移动结束调用
     func mapView(_ mapView: MAMapView!, mapDidMoveByUser wasUserAction: Bool) {
-//        let center = LatLng(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-//        let position = CameraPosition(bearing: 0, tilt: 0, zoom: 0, target: center)
-//        let args: [String: Any] = ["position": Convert.toJson(position: position)]
-//        channel.invokeMethod("camera#onIdle", arguments: args)
+        let center = LatLng(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
+        let position = CameraPosition(bearing: 0, tilt: 0, zoom: 0, target: center)
+        let args: [String: Any] = ["position": Convert.toJson(position: position)]
+        channel.invokeMethod("camera#onIdle", arguments: args)
     }
     
     // 地图定位失败调用
@@ -136,13 +140,6 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     func setCamera(camera: CameraPosition) {
         mapView.setCenter(CLLocationCoordinate2D(latitude: camera.target.latitude, longitude:  camera.target.longitude), animated: true)
         mapView.setZoomLevel(CGFloat(camera.zoom), animated: true)
-    }
-    
-    // AMapOptionsSink
-    func setIndoorMap(indoorEnabled: Bool) {
-        print("22222--------------------------------------------------")
-        print(indoorEnabled)
-        mapView.isShowsIndoorMap = indoorEnabled
     }
     
     func setMapType(mapType: Int) {
@@ -175,7 +172,11 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     func setMyLocationEnabled(myLocationEnabled: Bool) {
         mapView.showsUserLocation = myLocationEnabled
         // 开启用户定位默认开启follow模式
-        mapView.userTrackingMode = .follow
+        if myLocationEnabled {
+            mapView.userTrackingMode = .follow
+        } else {
+            mapView.userTrackingMode = .none
+        }
     }
     
     func setZoomEnabled(zoomEnabled: Bool) {

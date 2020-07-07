@@ -13,30 +13,26 @@ let jsonDecoder = JSONDecoder()
 class Convert {
     class func interpretMapOptions(options: Any?, delegate: AmapOptionsSink) {
         if let opts = options as? [String: Any] {
-//            if let camera = opts["camera"] as? [String: Any] {
-//                delegate.setCamera(camera: toCamera(opts: camera))
-//            }
-//            if let compassEnabled = opts["compassEnabled"] as? Bool {
-//                delegate.setCompassEnabled(compassEnabled: compassEnabled)
-//            }
-//            if let mapType = opts["mapType"] as? Int {
-//                delegate.setMapType(mapType: mapType)
-//            }
-//            if let myLocationEnabled = opts["myLocationEnabled"] as? Bool {
-//                delegate.setMyLocationEnabled(myLocationEnabled: myLocationEnabled)
-//            }
-//            if let scaleControlsEnabled = opts["scaleControlsEnabled"] as? Bool {
-//                delegate.setScaleEnabled(scaleEnabled: scaleControlsEnabled)
-//            }
-//            if let zoomControlsEnabled = opts["zoomControlsEnabled"] as? Bool {
-//                delegate.setZoomEnabled(zoomEnabled: zoomControlsEnabled)
-//            }
-//            if let scrollGesturesEnabled = opts["scrollGesturesEnabled"] as? Bool {
-//                delegate.setScrollEnabled(scrollEnabled: scrollGesturesEnabled)
-//            }
-            print(opts)
-            if let showsIndoorMap = opts["showsIndoorMap"] as? Bool {
-                delegate.setIndoorMap(indoorEnabled: showsIndoorMap)
+            if let camera = opts["camera"] as? [String: Any] {
+                delegate.setCamera(camera: toCamera(opts: camera))
+            }
+            if let compassEnabled = opts["compassEnabled"] as? Bool {
+                delegate.setCompassEnabled(compassEnabled: compassEnabled)
+            }
+            if let mapType = opts["mapType"] as? Int {
+                delegate.setMapType(mapType: mapType)
+            }
+            if let myLocationEnabled = opts["myLocationEnabled"] as? Bool {
+                delegate.setMyLocationEnabled(myLocationEnabled: myLocationEnabled)
+            }
+            if let scaleControlsEnabled = opts["scaleControlsEnabled"] as? Bool {
+                delegate.setScaleEnabled(scaleEnabled: scaleControlsEnabled)
+            }
+            if let zoomControlsEnabled = opts["zoomControlsEnabled"] as? Bool {
+                delegate.setZoomEnabled(zoomEnabled: zoomControlsEnabled)
+            }
+            if let scrollGesturesEnabled = opts["scrollGesturesEnabled"] as? Bool {
+                delegate.setScrollEnabled(scrollEnabled: scrollGesturesEnabled)
             }
         }
     }

@@ -8,13 +8,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.0.0"
+  amap_core:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: core
+      resolved-ref: ecc7aecbe78decddc5a5b34484017cfee263e9e6
+      url: "https://github.com/Spicely/amap_view.git"
+    source: git
+    version: "0.0.1"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.39.11"
+    version: "0.39.12"
   archive:
     dependency: transitive
     description:
@@ -70,7 +79,7 @@ packages:
       name: build_resolvers
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.9"
+    version: "1.3.10"
   build_runner:
     dependency: "direct dev"
     description:
