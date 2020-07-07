@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
@@ -22,13 +21,19 @@ import com.amap.api.maps.model.*
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import com.amap.api.maps.model.LatLng
+import com.muka.amap_view.AmapViewPlugin.Companion.CREATED
+import com.muka.amap_view.AmapViewPlugin.Companion.DESTROYED
+import com.muka.amap_view.AmapViewPlugin.Companion.PAUSED
+import com.muka.amap_view.AmapViewPlugin.Companion.RESUMED
+import com.muka.amap_view.AmapViewPlugin.Companion.STOPPED
+import io.flutter.plugin.common.PluginRegistry
 
 
-class AmapFactory(private val activityState: AtomicInteger, private val registrar: Registrar)
+class AmapFactory(private val activityState: AtomicInteger, private val registrar: PluginRegistry.Registrar)
     : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context, id: Int, args: Any): PlatformView {
-
+        Log.d("12321","2131")
         // 申请权限
         ActivityCompat.requestPermissions(registrar.activity(),
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -54,7 +59,7 @@ class AmapFactory(private val activityState: AtomicInteger, private val registra
 class AMapView(context: Context,
                id: Int,
                private val activityState: AtomicInteger,
-               private val registrar: Registrar,
+               private val registrar: PluginRegistry.Registrar,
                private val options: UnifiedMapOptions,
                private val initialMarkers: Any?)
     : PlatformView,
@@ -86,7 +91,7 @@ class AMapView(context: Context,
         registrarActivityHashCode = registrar.activity().hashCode()
 
         // 双端通信channel
-        methodChannel = MethodChannel(registrar.messenger(), "plugins.laoqiu.com/amap_view_$id")
+        methodChannel = MethodChannel(registrar.messenger(), "plugins.muka.com/amap_view_$id")
         methodChannel.setMethodCallHandler(this)
 
         // marker控制器
@@ -98,22 +103,22 @@ class AMapView(context: Context,
 
     fun setup() {
         when (activityState.get()) {
-            5 -> {
+            STOPPED -> {
                 mapView.onCreate(null)
                 mapView.onResume()
                 mapView.onPause()
             }
-            4 -> {
+            PAUSED -> {
                 mapView.onCreate(null)
                 mapView.onResume()
                 mapView.onPause()
             }
-            3 -> {
+            RESUMED -> {
                 mapView.onCreate(null)
                 mapView.onResume()
             }
-            1 -> mapView.onCreate(null)
-            6 -> {
+            CREATED -> mapView.onCreate(null)
+            DESTROYED -> {
             }
             else -> throw IllegalArgumentException(
                     "Cannot interpret " + activityState.get() + " as an activity state")
@@ -185,14 +190,14 @@ class AMapView(context: Context,
         // 设置地图是否显示当前位置蓝点
         var myLocationEnable: Boolean = options.getMyLocationEnable()
         if (myLocationEnable) {
-            map.setMyLocationEnabled(true)
+            map.isMyLocationEnabled = true
             var style = MyLocationStyle()
             style.myLocationType(options.getMyLocationStyle())
             // 设置蓝点类型
-            map.setMyLocationStyle(style)
+            map.myLocationStyle = style
             // 设置是否显示移动按钮
-            map.getUiSettings().setMyLocationButtonEnabled(true)
-            map.getUiSettings().zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
+            map.uiSettings.isMyLocationButtonEnabled = true
+            map.uiSettings.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
         }
         // 初始化markers
         updateInitialMarkers()

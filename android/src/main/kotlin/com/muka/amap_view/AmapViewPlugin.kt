@@ -1,57 +1,85 @@
 package com.muka.amap_view
 
-import androidx.annotation.NonNull;
-
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+import android.app.Activity
+import android.app.Application
+import android.os.Bundle
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.util.concurrent.atomic.AtomicInteger
 
-/** AmapViewPlugin */
-public class AmapViewPlugin(registrar: Registrar) : FlutterPlugin, MethodCallHandler {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
-    private lateinit var channel: MethodChannel
+class AmapViewPlugin(registrar: Registrar) : Application.ActivityLifecycleCallbacks {
+
     private val state = AtomicInteger(0)
+    private val registrarActivityHashCode: Int
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-//        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "amap_view")
-//        channel.setMethodCallHandler(this);
-    }
-
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-    //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
     companion object {
+
+        internal val CREATED = 1
+
+        // internal val STARTED = 2
+        internal val RESUMED = 3
+        internal val PAUSED = 4
+        internal val STOPPED = 5
+        internal val DESTROYED = 6
+
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-//          val channel = MethodChannel(registrar.messenger(), "amap_view")
-//          channel.setMethodCallHandler(AmapViewPlugin())
+            if (registrar.activity() == null) {
+                // When a background flutter view tries to register the plugin, the registrar has no activity.
+                // We stop the registration process as this plugin is foreground only.
+                return
+            }
+
             val plugin = AmapViewPlugin(registrar)
+            registrar.activity().application.registerActivityLifecycleCallbacks(plugin)
             registrar.platformViewRegistry().registerViewFactory("plugins.muka.com/amap_view", AmapFactory(plugin.state, registrar))
         }
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else {
-            result.notImplemented()
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
+        }
+        state.set(CREATED)
+    }
+
+    override fun onActivityStarted(activity: Activity) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
+    override fun onActivityResumed(activity: Activity) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
+        }
+        state.set(RESUMED)
     }
+
+    override fun onActivityPaused(activity: Activity) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
+        }
+        state.set(PAUSED)
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
+        }
+        state.set(STOPPED)
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+
+    override fun onActivityDestroyed(activity: Activity) {
+        if (activity.hashCode() != registrarActivityHashCode) {
+            return
+        }
+        state.set(DESTROYED)
+    }
+
+    init {
+        this.registrarActivityHashCode = registrar.activity().hashCode()
+    }
+
 }
