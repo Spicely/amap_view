@@ -10,7 +10,7 @@ packages:
       url: "https://github.com/Spicely/amap_view.git"
     source: git
     version: "0.0.1"
-  amap_view:
+  amap_navi:
     dependency: "direct main"
     description:
       path: ".."

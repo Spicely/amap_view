@@ -1,4 +1,4 @@
-group 'com.muka.amap_view'
+group 'com.muka.amap_navi'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -41,5 +41,4 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.amap.api:navi-3dmap:latest.integration"
-    implementation "com.google.code.gson:gson:2.8.5"
 }

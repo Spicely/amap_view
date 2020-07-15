@@ -1,18 +1,15 @@
 PODS:
-  - amap_view (0.0.1):
+  - amap_navi (0.0.1):
     - AMapNavi
     - Flutter
   - AMapFoundation (1.6.3)
   - AMapNavi (7.5.0):
     - AMapFoundation (~> 1.6.3)
   - Flutter (1.0.0)
-  - "permission_handler (5.0.1+1)":
-    - Flutter
 
 DEPENDENCIES:
-  - amap_view (from `.symlinks/plugins/amap_view/ios`)
+  - amap_navi (from `.symlinks/plugins/amap_navi/ios`)
   - Flutter (from `Flutter`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
 
 SPEC REPOS:
   trunk:
@@ -20,19 +17,16 @@ SPEC REPOS:
     - AMapNavi
 
 EXTERNAL SOURCES:
-  amap_view:
-    :path: ".symlinks/plugins/amap_view/ios"
+  amap_navi:
+    :path: ".symlinks/plugins/amap_navi/ios"
   Flutter:
     :path: Flutter
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  amap_view: fe212d5654be9647b26e5af6d251411bc56e75c6
+  amap_navi: adea7abf6f7a21bbf72bcf91f04d2dd298851c10
   AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
   AMapNavi: a47cf864249da145c0055fd31c49c0006da5ce64
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 

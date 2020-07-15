@@ -1,6 +1,6 @@
-# amap_view_example
+# amap_navi_example
 
-Demonstrates how to use the amap_view plugin.
+Demonstrates how to use the amap_navi plugin.
 
 ## Getting Started
 

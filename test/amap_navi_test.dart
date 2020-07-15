@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:amap_view/amap_view.dart';
+import 'package:amap_navi/amap_navi.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('amap_view');
+  const MethodChannel channel = MethodChannel('amap_navi');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    // expect(await AmapView.platformVersion, '42');
+    expect(await AmapNavi.platformVersion, '42');
   });
 }

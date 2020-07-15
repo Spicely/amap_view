@@ -1,6 +1,6 @@
-# amap_view
+# amap_navi
 
-高德地图 地图插件
+高德地图 导航插件
 
 ## Android
 
@@ -30,4 +30,14 @@
         <string>location</string>
         <string>audio</string> 
     </array>
+```
+
+`IOS中 骑行、步行使用默认样式`
+
+```
+    await AmapNavi.showRoute(
+        // DRIVER 汽车导航 默认使用官方组件 RIDE 骑行 WALK 步行 【骑行和步行为自定义SDK 发起直接进入导航】
+        naviType: NaviType.DRIVER, 
+        end: Poi("下一站", LatLng(30.659314, 104.056294), ""),
+    );
 ```

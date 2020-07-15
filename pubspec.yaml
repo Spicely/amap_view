@@ -1,8 +1,8 @@
-name: amap_view
-description: 高德地图 地图插件
+name: amap_navi
+description: A new Flutter plugin.
 version: 0.0.1
 author:
-homepage: https://github.com/Spicely/amap_view
+homepage: https://github.com/Spicely/amap_view.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -11,17 +11,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
   amap_core:
-    git: 
+    git:
       url: https://github.com/Spicely/amap_view.git
       ref: core
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
-  json_serializable:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -35,10 +32,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.muka.amap_view
-        pluginClass: AmapViewPlugin
+        package: com.muka.amap_navi
+        pluginClass: AmapNaviPlugin
       ios:
-        pluginClass: AmapViewPlugin
+        pluginClass: AmapNaviPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
