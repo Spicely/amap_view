@@ -91,22 +91,22 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     // MAMapViewDelegate
     
     // 设置标注样式 会影响当前定位蓝点
-    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
-        print(annotation.isKind(of: MAPointAnnotation.self) )
-        if annotation.isKind(of: MAPointAnnotation.self) {
-            let pointReuseIndetifier = "pointReuseIndetifier"
-            var annotationView: MAAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier)
-            if annotationView === nil {
-                annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
-            }
+    // func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
+    //     print(annotation.isKind(of: MAPointAnnotation.self) )
+    //     if annotation.isKind(of: MAPointAnnotation.self) {
+    //         let pointReuseIndetifier = "pointReuseIndetifier"
+    //         var annotationView: MAAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier)
+    //         if annotationView === nil {
+    //             annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
+    //         }
 
-            // 配置参数
-            annotationView!.isDraggable = false
+    //         // 配置参数
+    //         annotationView!.isDraggable = false
 
-            return annotationView
-        }
-        return nil
-    }
+    //         return annotationView
+    //     }
+    //     return nil
+    // }
     
     // 地图将要移动时调用
     func mapView(_ mapView: MAMapView!, mapWillMoveByUser wasUserAction: Bool) {
