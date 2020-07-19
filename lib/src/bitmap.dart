@@ -32,8 +32,13 @@ class BitmapDescriptor {
     ]);
   }
 
-  static Future<BitmapDescriptor> fromAssetImageWithText(ImageConfiguration configuration, String assetName, Label label,
-      {AssetBundle bundle, String package}) async {
+  static Future<BitmapDescriptor> fromAssetImageWithText(
+    ImageConfiguration configuration,
+    String assetName,
+    Label label, {
+    AssetBundle bundle,
+    String package,
+  }) async {
     final AssetImage assetImage = AssetImage(assetName, package: package, bundle: bundle);
     final AssetBundleImageKey assetBundleImageKey = await assetImage.obtainKey(configuration);
     return BitmapDescriptor._(<dynamic>['fromAssetImageWithText', assetBundleImageKey.name, assetBundleImageKey.scale, label.toMap()]);

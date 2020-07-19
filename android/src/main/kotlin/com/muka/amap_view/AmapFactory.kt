@@ -33,7 +33,6 @@ class AmapFactory(private val activityState: AtomicInteger, private val registra
     : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context, id: Int, args: Any): PlatformView {
-        Log.d("12321","2131")
         // 申请权限
         ActivityCompat.requestPermissions(registrar.activity(),
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -82,10 +81,10 @@ class AMapView(context: Context,
     private val registrarActivityHashCode: Int
     private var markerController: MarkerController
     private val polylineController: PolylineController
-    private var density = context.getResources().getDisplayMetrics().density
+    private var density = context.resources.displayMetrics.density
 
     init {
-        map = mapView.getMap()
+        map = mapView.map
         map.setOnMapLoadedListener(this)
 
         registrarActivityHashCode = registrar.activity().hashCode()
@@ -218,7 +217,7 @@ class AMapView(context: Context,
         registrar.activity().application.unregisterActivityLifecycleCallbacks(this)
     }
 
-    fun updateInitialMarkers() {
+    private fun updateInitialMarkers() {
         if (initialMarkers != null) {
             var markers = initialMarkers as List<Any>
             markerController.addMarkers(markers)

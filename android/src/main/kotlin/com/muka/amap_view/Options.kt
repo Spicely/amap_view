@@ -1,7 +1,5 @@
 package com.muka.amap_view
 
-import android.graphics.Color
-import android.util.Log
 import com.amap.api.maps.AMap
 import com.amap.api.maps.AMapOptions
 import com.amap.api.maps.model.*
@@ -57,7 +55,8 @@ class UnifiedMarkerOptions(
         val visible: Boolean = true,
         val flat: Boolean = false,
         val draggable: Boolean = true,
-        var infoWindowEnable: Boolean = true,
+        private var infoWindowEnable: Boolean = true,
+        var showInfoWindow: Boolean? = null,
         val zIndex: Float = 1.0f,
         val rotation: Float = 0.0f,
         val infoWindow: Map<String, Any>) {

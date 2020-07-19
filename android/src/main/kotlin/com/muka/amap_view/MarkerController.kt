@@ -17,17 +17,20 @@ class MarkerController(private val methodChannel: MethodChannel, private val map
     // Marker.Id与dart端markerId的映射关系
     private val markerIdToDartMarkerId = HashMap<String, String>();
 
-    fun addMarker(opts: Any) {
+    private fun addMarker(opts: Any) {
         var options = Convert.toUnifiedMarkerOptions(opts)
         var markerId = options.markerId
         var marker = map.addMarker(options.toMarkerOptions())
+        marker.run {
+
+        }
         Convert.interpretMarkerOptions(marker, options, null)
         markerIdToMarker[markerId] = marker
         markerIdToOptions[markerId] = options
         markerIdToDartMarkerId[marker.id] = markerId
     }
 
-    fun changeMarker(opts: Any) {
+    private fun changeMarker(opts: Any) {
         var options = Convert.toUnifiedMarkerOptions(opts)
         var markerId = options.markerId
         var marker = markerIdToMarker[markerId]

@@ -17,7 +17,7 @@ class PolylineController(private val methodChannel: MethodChannel, private val m
     // Polyline.Id与dart端polylineId的映射关系
     private val polylineIdToDartPolylineId = HashMap<String, String>();
 
-    fun addPolyline(opts: Any) {
+    private fun addPolyline(opts: Any) {
         var options = Convert.toUnifiedPolylineOptions(opts)
         var polylineId = options.polylineId
         var polyline = map.addPolyline(options.toPolylineOptions())
@@ -26,7 +26,7 @@ class PolylineController(private val methodChannel: MethodChannel, private val m
         polylineIdToDartPolylineId[polyline.id] = polylineId
     }
 
-    fun changePolyline(opts: Any) {
+    private fun changePolyline(opts: Any) {
         var options = Convert.toUnifiedPolylineOptions(opts)
         var polylineId = options.polylineId
         var polyline = polylineIdToPolyline[polylineId]

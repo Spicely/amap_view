@@ -63,9 +63,7 @@ class InfoWindow {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
     final InfoWindow typedOther = other;
-    return title == typedOther.title &&
-        snippet == typedOther.snippet &&
-        anchor == typedOther.anchor;
+    return title == typedOther.title && snippet == typedOther.snippet && anchor == typedOther.anchor;
   }
 
   @override
@@ -117,9 +115,19 @@ class Marker {
     this.visible = true,
     this.zIndex = 0.0,
     this.onTap,
+    this.showInfoWindow,
   }) : assert(alpha == null || (0.0 <= alpha && alpha <= 1.0));
 
   final MarkerId markerId;
+
+  /// 设置[Marker][InfoWindow]显示
+  /// 
+  /// 只能显示一个 
+  /// 
+  /// 如果新增 为true则显示新增的
+  /// 
+  /// 更新时 参数没有改变将不会被触发
+  final bool showInfoWindow;
 
   /// 设置[Marker]透明度
   final double alpha;
@@ -167,6 +175,7 @@ class Marker {
     bool visibleParam,
     double zIndexParam,
     VoidCallback onTapParam,
+    bool showInfoWindow,
   }) {
     return Marker(
       markerId: markerId,
@@ -181,6 +190,7 @@ class Marker {
       visible: visibleParam ?? visible,
       zIndex: zIndexParam ?? zIndex,
       onTap: onTapParam ?? onTap,
+      showInfoWindow: showInfoWindow,
     );
   }
 
@@ -205,6 +215,7 @@ class Marker {
     addIfPresent('position', position?.toJson());
     addIfPresent('visible', visible);
     addIfPresent('zIndex', zIndex);
+    addIfPresent('showInfoWindow', showInfoWindow);
     return _data;
   }
 
@@ -232,8 +243,7 @@ Map<MarkerId, Marker> _keyByMarkerId(Iterable<Marker> markers) {
   if (markers == null) {
     return <MarkerId, Marker>{};
   }
-  return Map<MarkerId, Marker>.fromEntries(markers.map(
-      (Marker marker) => MapEntry<MarkerId, Marker>(marker.markerId, marker)));
+  return Map<MarkerId, Marker>.fromEntries(markers.map((Marker marker) => MapEntry<MarkerId, Marker>(marker.markerId, marker)));
 }
 
 List<dynamic> _serializeMarkerSet(Set<Marker> markers) {
@@ -242,7 +252,6 @@ List<dynamic> _serializeMarkerSet(Set<Marker> markers) {
   }
   return markers.map<dynamic>((Marker m) => m.toMap()).toList();
 }
-
 
 class _MarkerUpdates {
   /// Computes [_MarkerUpdates] given previous and current [Marker]s.
@@ -267,15 +276,9 @@ class _MarkerUpdates {
 
     final Set<MarkerId> _markerIdsToRemove = prevMarkerIds.difference(currentMarkerIds);
 
-    final Set<Marker> _markersToAdd = currentMarkerIds
-        .difference(prevMarkerIds)
-        .map(idToCurrentMarker)
-        .toSet();
+    final Set<Marker> _markersToAdd = currentMarkerIds.difference(prevMarkerIds).map(idToCurrentMarker).toSet();
 
-    final Set<Marker> _markersToChange = currentMarkerIds
-        .intersection(prevMarkerIds)
-        .map(idToCurrentMarker)
-        .toSet();
+    final Set<Marker> _markersToChange = currentMarkerIds.intersection(prevMarkerIds).map(idToCurrentMarker).toSet();
 
     markersToAdd = _markersToAdd;
     markerIdsToRemove = _markerIdsToRemove;
@@ -297,8 +300,7 @@ class _MarkerUpdates {
 
     addIfNonNull('markersToAdd', _serializeMarkerSet(markersToAdd));
     addIfNonNull('markersToChange', _serializeMarkerSet(markersToChange));
-    addIfNonNull('markerIdsToRemove',
-        markerIdsToRemove.map<dynamic>((MarkerId m) => m.value).toList());
+    addIfNonNull('markerIdsToRemove', markerIdsToRemove.map<dynamic>((MarkerId m) => m.value).toList());
 
     return updateMap;
   }
@@ -314,8 +316,7 @@ class _MarkerUpdates {
   }
 
   @override
-  int get hashCode =>
-      hashValues(markersToAdd, markerIdsToRemove, markersToChange);
+  int get hashCode => hashValues(markersToAdd, markerIdsToRemove, markersToChange);
 
   @override
   String toString() {

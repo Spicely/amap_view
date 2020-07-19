@@ -49,7 +49,7 @@ class AsyncTaskLoadAvatar(
                 Bitmap.createScaledBitmap(bitmap, width, height, true), Math.min(width, height) / 2)
         if (background != null) photo = mergeBitmap(background, photo, left, top)
         marker.setIcon(BitmapDescriptorFactory.fromBitmap(photo))
-        marker.setVisible(visible)
+        marker.isVisible = visible
     }
 
     fun mergeBitmap(b1: Bitmap, b2: Bitmap, left: Float, top: Float): Bitmap {
@@ -143,38 +143,52 @@ class Convert {
         fun interpretMarkerOptions(marker: Marker, new: UnifiedMarkerOptions, old: UnifiedMarkerOptions?) {
             if (old == null) {
                 interpretMarkerIcon(new.icon, marker)
+                if (new.showInfoWindow != null) {
+                    if (new.showInfoWindow == true) {
+                        marker.showInfoWindow()
+                    } else if (marker.isInfoWindowShown) {
+                        marker.hideInfoWindow()
+                    }
+                }
             } else {
+                if (new.showInfoWindow != old.showInfoWindow) {
+                    if (new.showInfoWindow == true) {
+                        marker.showInfoWindow()
+                    } else if (marker.isInfoWindowShown) {
+                        marker.hideInfoWindow()
+                    }
+                }
                 if (old.visible != new.visible) {
-                    marker.setVisible(new.visible)
+                    marker.isVisible = new.visible
                 }
                 if (old.flat != new.flat) {
-                    marker.setFlat(new.flat)
+                    marker.isFlat = new.flat
                 }
                 if (old.alpha != new.alpha) {
-                    marker.setAlpha(new.alpha)
+                    marker.alpha = new.alpha
                 }
                 if (old.infoWindow != new.infoWindow) {
                     if (new.infoWindow["snippet"] != null) {
-                        marker.setSnippet(new.infoWindow["snippet"] as String)
+                        marker.snippet = new.infoWindow["snippet"] as String
                     }
                     if (new.infoWindow["title"] != null) {
-                        marker.setTitle(new.infoWindow["title"] as String)
+                        marker.title = new.infoWindow["title"] as String
                     }
                 }
                 if (old.draggable != new.draggable) {
-                    marker.setDraggable(new.draggable)
+                    marker.isDraggable = new.draggable
                 }
                 if (old.anchor != new.anchor) {
                     marker.setAnchor(new.anchor[0], new.anchor[1])
                 }
                 if (old.position != new.position) {
-                    marker.setPosition(new.position)
+                    marker.position = new.position
                 }
                 if (old.rotation != new.rotation) {
-                    marker.setRotateAngle(new.rotation)
+                    marker.rotateAngle = new.rotation
                 }
                 if (old.zIndex != new.zIndex) {
-                    marker.setZIndex(new.zIndex)
+                    marker.zIndex = new.zIndex
                 }
                 if (old.icon != new.icon) {
                     interpretMarkerIcon(new.icon, marker)
@@ -183,7 +197,7 @@ class Convert {
 
         }
 
-        fun interpretMarkerIcon(o: Any?, marker: Marker) {
+        private fun interpretMarkerIcon(o: Any?, marker: Marker) {
             var data = o as List<Any>
             var icon: BitmapDescriptor
             when (data[0].toString()) {
@@ -211,10 +225,10 @@ class Convert {
                                 FlutterMain.getLookupKeyForAsset(toString(data[1])))
                         var scale = data[2] as Double
                         var label = data[3] as Map<String, Any>
-                        var text = label.get("text") as String
-                        var size = label.get("size") as Double
-                        var color = label.get("color") as List<Int>
-                        var offset = label.get("offset") as List<Float>
+                        var text = label["text"] as String
+                        var size = label["size"] as Double
+                        var color = label["color"] as List<Int>
+                        var offset = label["offset"] as List<Float>
                         var bitmap = drawTextToBitmap(icon.bitmap, text, size.toFloat(), color, scale.toFloat(), offset[0], offset[1])
                         marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap))
                     } else {
@@ -226,20 +240,20 @@ class Convert {
                     if (data.size == 4) {
                         // 网络图片的marker，等图片加载完成才显示
                         var visible: Boolean = marker.isVisible
-                        if (visible) marker.setVisible(false)
+                        if (visible) marker.isVisible = false
                         var icon = BitmapDescriptorFactory.fromAsset(
                                 FlutterMain.getLookupKeyForAsset(toString(data[1])))
                         var avatar = data[3] as Map<String, Any>
-                        var url = avatar.get("url") as String
-                        var size = avatar.get("size") as List<Int>
-                        var offset = avatar.get("offset") as List<Float>
+                        var url = avatar["url"] as String
+                        var size = avatar["size"] as List<Int>
+                        var offset = avatar["offset"] as List<Float>
                         AsyncTaskLoadAvatar(marker, visible, size[0], size[1], offset[0], offset[1], icon.bitmap).execute(url)
                     } else {
                         throw IllegalArgumentException(
                                 "'fromAvatarWithAssetImage' Expected exactly 4 arguments, got: " + data.size);
                     }
                 }
-                else -> throw IllegalArgumentException("Cannot interpret " + o + " as BitmapDescriptor")
+                else -> throw IllegalArgumentException("Cannot interpret $o as BitmapDescriptor")
             }
         }
 
@@ -353,8 +367,6 @@ class Convert {
         }
 
 
-
-
         fun toCameraPosition(o: Any): CameraPosition {
             val data = toMap(o)
             val builder = CameraPosition.Builder()
@@ -415,7 +427,6 @@ class Convert {
             data.put("latitude", point.latitude)
             return data
         }
-
 
 
         fun toDouble(o: Any): Double {
