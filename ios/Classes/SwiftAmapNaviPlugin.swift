@@ -3,12 +3,6 @@ import UIKit
 
 public class SwiftAmapNaviPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "amap_navi", binaryMessenger: registrar.messenger())
-    let instance = SwiftAmapNaviPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    AmapNavFactory(withMessenger: registrar.messenger()).register()
   }
 }

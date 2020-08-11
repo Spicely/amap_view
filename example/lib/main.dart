@@ -33,13 +33,13 @@ class _MyAppState extends State<MyApp> {
           child: RaisedButton(
             child: Text("导航"),
             onPressed: () async {
-              if (await Permission.locationAlways.request().isGranted) {
+              // if (await Permission.locationAlways.request().isGranted) {
                 await AmapNavi.showRoute(
                   naviType: NaviType.WALK,
                   // start: Poi("", LatLng(30.649863, 104.066851), ""),
                   end: Poi("下一站", LatLng(30.659019, 104.057066), ""),
                 );
-              }
+              // }
             },
           ),
         ),
