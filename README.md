@@ -6,7 +6,8 @@ Flutter高德定位插件
 
 ```
     amap_location:
-        git: https://github.com/Spicely/amap_view.git
+      git:
+        url: https://github.com/Spicely/amap_view.git
         ref: location
 ```
 
@@ -38,10 +39,10 @@ Flutter高德定位插件
     </array>
 ```
 
-#### AmapLocation `Android fetch、start方法 可传递mode属性来改变定位方式 IOS不支持`
+#### AmapLocation
 
 ```
-    /// 持续定位
+    /// 持续定位 IOS目前有问题
     stopLocation = await AmapLocation.start(
         listen: (Location location) {
             print(location.toJson());
@@ -55,7 +56,7 @@ Flutter高德定位插件
     Location location = await AmapLocation.fetch();
     print(location.toJson());
 
-    /// 后台定位
+    /// 后台定位 IOS目前有问题
     /// vibrate 属性只支持一次性设置 设置后除非卸载app否则不会变更
     /// 另一种办法是变更chanlid 但对于定位来说 一般不会变更 暂时不考虑提供参数
     class _MyAppState extends State<MyApp> with WidgetsBindingObserver {

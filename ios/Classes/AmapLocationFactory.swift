@@ -18,7 +18,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
     private var search: AMapSearchAPI
     private var eventSink: FlutterEventSink?
     private var timer: Timer?
-    private var interval: Int?
+    private var interval: Int = 2000
     private var start: Bool = true
     private var mapLoca: Dictionary<String, Any>?
     private var fetchLoca: Dictionary<String, Any>?
@@ -99,10 +99,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             }
         case "start":
             if let args = methodCall.arguments as? [String: Any] {
-                interval = args["time"] as? Int
-                if (interval == nil) {
-                    interval = 200
-                }
+                interval = args["time"] as? Int ?? 2000
                 var accuracy = args["accuracy"] as? Int
                 if (accuracy == nil) {
                     accuracy = 0
@@ -122,7 +119,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 }
                 timer?.invalidate()
                 start = true
-                timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
+                timer =  Timer.scheduledTimer(timeInterval:TimeInterval(interval / 1000), target: self, selector: #selector(sinkLocation(_:)), userInfo: nil, repeats: true)
                 locationManager.stopUpdatingLocation()
                 locationManager.startUpdatingLocation()
             }
@@ -136,7 +133,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             locationManager.allowsBackgroundLocationUpdates = true
             timer?.invalidate()
             start = true
-            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval / 1000), target: self, selector: #selector(sinkLocation(_:)), userInfo: nil, repeats: true)
             locationManager.startUpdatingLocation()
             result(nil)
         case "disableBackground":
@@ -144,14 +141,14 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             locationManager.allowsBackgroundLocationUpdates = false
             timer?.invalidate()
             start = true
-            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval! / 1000), target: self, selector: #selector(sinkLocation), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval / 1000), target: self, selector: #selector(sinkLocation(_:)), userInfo: nil, repeats: true)
             locationManager.startUpdatingLocation()
             result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }
     }
-    @objc func sinkLocation() {
+    @objc func sinkLocation(_ time:Timer) -> Void  {
         if (mapLoca != nil) {
             eventSink?(mapLoca)
         }
