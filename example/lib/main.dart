@@ -43,12 +43,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    // if (await Permission.locationAlways.request().isGranted) {
-    location = await AmapLocation.fetch(geocode: true);
-    print(location.geocode?.toJson());
-    print('单次定位');
-    setState(() {});
-    // }
+    if (await Permission.locationAlways.request().isGranted) {
+      location = await AmapLocation.fetch(geocode: true);
+      print(location.geocode?.toJson());
+      print('单次定位');
+      setState(() {});
+    }
   }
 
   @override
@@ -85,6 +85,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               onPressed: () async {
                 print('持续定位');
                 stopLocation = await AmapLocation.start(
+                  time: 10000,
                   listen: (Location location) {
                     print(location.toJson());
                     print('持续定位222');
