@@ -9,7 +9,7 @@ const _viewType = "plugins.muka.com/amap_view";
 class AmapView extends StatefulWidget {
   AmapView({
     Key key,
-    this.initialCameraPosition,
+    this.cameraPosition,
     this.mapType = MapType.NORMAL,
     this.myLocationStyle = MyLocationStyle.LOCATION_TYPE_SHOW,
     this.myLocationEnabled = false,
@@ -36,7 +36,7 @@ class AmapView extends StatefulWidget {
   final MyLocationStyle myLocationStyle;
 
   /// 初始化地图位置
-  final CameraPosition initialCameraPosition;
+  final CameraPosition cameraPosition;
 
   /// 设置地图是否显示当前位置，默认为false
   final bool myLocationEnabled;
@@ -243,7 +243,7 @@ class _AMapOptions {
     return _AMapOptions(
       mapType: map.mapType,
       myLocationStyle: map.myLocationStyle,
-      cameraPosition: map.initialCameraPosition,
+      cameraPosition: map.cameraPosition,
       myLocationEnabled: map.myLocationEnabled,
       scrollGesturesEnabled: map.scrollGesturesEnabled,
       rotateGesturesEnabled: map.rotateGesturesEnabled,

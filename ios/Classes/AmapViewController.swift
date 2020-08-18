@@ -116,7 +116,7 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     // 地图移动结束调用
     func mapView(_ mapView: MAMapView!, mapDidMoveByUser wasUserAction: Bool) {
         let center = LatLng(latitude: mapView.centerCoordinate.latitude, longitude: mapView.centerCoordinate.longitude)
-        let position = CameraPosition(bearing: 0, tilt: 0, zoom: 0, target: center)
+        let position = CameraPosition(bearing: 0, tilt: Double(mapView.cameraDegree), zoom: Double(mapView.zoomLevel), target: center)
         let args: [String: Any] = ["position": Convert.toJson(position: position)]
         channel.invokeMethod("camera#onIdle", arguments: args)
     }
@@ -141,6 +141,7 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     func setCamera(camera: CameraPosition) {
         mapView.setCenter(CLLocationCoordinate2D(latitude: camera.target.latitude, longitude:  camera.target.longitude), animated: true)
         mapView.setZoomLevel(CGFloat(camera.zoom), animated: true)
+        mapView.setCameraDegree(CGFloat(camera.tilt), animated: true, duration: 0.5)
     }
     
     func setMapType(mapType: Int) {

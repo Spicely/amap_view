@@ -61,25 +61,26 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Expanded(
               child: AmapView(
-                initialCameraPosition: CameraPosition(
+                cameraPosition: CameraPosition(
                   target: center,
                   zoom: 17,
-                  tilt: 170,
+                  tilt: 30,
                 ),
                 // myLocationEnabled: true,
                 // myLocationStyle: MyLocationStyle.LOCATION_TYPE_FOLLOW,
                 markers: Set<Marker>.of(markers.values),
-                // onCameraIdle: (CameraPosition position) {
-                //   setState(() {
-                //     center = position.target;
-                //     markers[centerMarkerId] = Marker(
-                //       markerId: centerMarkerId,
-                //       position: position.target,
-                //       infoWindowEnable: true,
-                //       draggable: true,
-                //     );
-                //   });
-                // },
+                onCameraIdle: (CameraPosition position) {
+                  print(position);
+                  // setState(() {
+                  //   center = position.target;
+                  //   markers[centerMarkerId] = Marker(
+                  //     markerId: centerMarkerId,
+                  //     position: position.target,
+                  //     infoWindowEnable: true,
+                  //     draggable: true,
+                  //   );
+                  // });
+                },
               ),
             ),
             Row(
@@ -93,6 +94,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () {
                     setState(() {
                       markers.clear();
+                      print(markers);
                     });
                   },
                 ),
