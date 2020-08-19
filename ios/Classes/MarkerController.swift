@@ -31,14 +31,18 @@ class MarkerController: NSObject {
             if let position = opts["position"] as? [String: Double] {
                 point.coordinate = CLLocationCoordinate2D(latitude: position["latitude"]!, longitude: position["longitude"]!)
             }
-            point.title = "test"
-            point.subtitle = "test subtitle"
+            if let infoWindow = opts["infoWindow"] as? [String: Any] {
+                point.title = infoWindow["title"] as? String
+                point.subtitle = infoWindow["snippet"] as? String
+            }
             let markerId = opts["markerId"] as! String
-            mapView.addAnnotation(point)
             
             // 保存状态
             markerIdToMarker[markerId] = point
-            markerIdToOptions[markerId] = options
+            markerIdToOptions[markerId] = opts
+            
+            mapView.addAnnotation(point)
+            
             // markerIdToDartMarkerId[]
         }
     }
@@ -67,6 +71,10 @@ class MarkerController: NSObject {
     }
     
     func removeMarkers(markerIdsToRemove: [Any]) {
-        print("markerIdsToRemove ===>", markerIdsToRemove)
+        for o in markerIdsToRemove {
+            mapView.removeAnnotation(markerIdToMarker[o as! String])
+            markerIdToMarker.removeValue(forKey: o as! String)
+            markerIdToOptions.removeValue(forKey: o as! String)
+        }
     }
 }

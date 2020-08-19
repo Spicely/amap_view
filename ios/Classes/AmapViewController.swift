@@ -90,23 +90,49 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     
     // MAMapViewDelegate
     
-    // 设置标注样式 会影响当前定位蓝点
-    // func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
-    //     print(annotation.isKind(of: MAPointAnnotation.self) )
-    //     if annotation.isKind(of: MAPointAnnotation.self) {
-    //         let pointReuseIndetifier = "pointReuseIndetifier"
-    //         var annotationView: MAAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier)
-    //         if annotationView === nil {
-    //             annotationView = MAAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
-    //         }
-
-    //         // 配置参数
-    //         annotationView!.isDraggable = false
-
-    //         return annotationView
-    //     }
-    //     return nil
-    // }
+    // 绘制marker
+    func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
+        let ops =  markerController.markerIdToOptions.first(where:{ (arr,val) -> Bool in
+            if let v = val as? [String: Any] {
+                if let position = v["position"] as? [String: Double] {
+                    if (position["latitude"] == annotation.coordinate.latitude && position["longitude"] == annotation.coordinate.longitude ){
+                        return true
+                    }
+                    return false
+                }
+            }
+            return false
+        })
+        if(ops == nil) {
+            return nil
+        }
+        if annotation.isKind(of: MAPointAnnotation.self) {
+            let pointReuseIndetifier = "pointReuseIndetifier"
+            var annotationView: MAPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
+            
+            if annotationView == nil {
+                annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
+            }
+            annotationView!.canShowCallout = true
+            annotationView!.animatesDrop = true
+            annotationView!.isDraggable = true
+            //                annotation.
+            
+            if let opts = ops as? [String: Any] {
+                if let icon = opts["icon"] as? [String: Any] {
+                }
+            }
+            // print(annotationView!.value(forKey: "markerId") as Any)
+            //                annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
+            
+            //                let idx = annotations.index(of: annotation as! MAPointAnnotation)
+            //                annotationView!.pinColor = MAPinAnnotationColor(rawValue: idx!%3)!
+            
+            return annotationView!
+        }
+        
+        return nil
+    }
     
     // 地图将要移动时调用
     func mapView(_ mapView: MAMapView!, mapWillMoveByUser wasUserAction: Bool) {
@@ -136,7 +162,7 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     func mapView(_ mapView: MAMapView!, didTouchPois pois: [Any]!) {
         print("didTouchPois ===>", pois)
     }
-
+    
     // AMapOptionsSink
     func setCamera(camera: CameraPosition) {
         mapView.setCenter(CLLocationCoordinate2D(latitude: camera.target.latitude, longitude:  camera.target.longitude), animated: true)
@@ -158,7 +184,7 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
             mapView.mapType = MAMapType.standard
         }
     }
-
+    
     func setRotateGesturesEnabled(rotateGesturesEnabled: Bool) {
         mapView.isRotateEnabled = rotateGesturesEnabled
     }

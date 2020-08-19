@@ -17,9 +17,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _markerIdCounter = 1;
   ImageConfiguration imageConfiguration;
+  CameraPosition _cameraPosition;
 
   @override
   void initState() {
+    _cameraPosition = CameraPosition(
+      target: LatLng(30.654889, 104.081402),
+      zoom: 17,
+      tilt: 30,
+    );
     super.initState();
     imageConfiguration = createLocalImageConfiguration(context);
 
@@ -61,60 +67,57 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             Expanded(
               child: AmapView(
-                cameraPosition: CameraPosition(
-                  target: center,
-                  zoom: 17,
-                  tilt: 30,
-                ),
-                // myLocationEnabled: true,
-                // myLocationStyle: MyLocationStyle.LOCATION_TYPE_FOLLOW,
+                cameraPosition: _cameraPosition,
+                myLocationEnabled: true,
+                myLocationStyle: MyLocationStyle.LOCATION_TYPE_FOLLOW,
                 markers: Set<Marker>.of(markers.values),
                 onCameraIdle: (CameraPosition position) {
-                  print(position);
-                  // setState(() {
-                  //   center = position.target;
-                  //   markers[centerMarkerId] = Marker(
-                  //     markerId: centerMarkerId,
-                  //     position: position.target,
-                  //     infoWindowEnable: true,
-                  //     draggable: true,
-                  //   );
-                  // });
+                  setState(() {
+                    _cameraPosition = position;
+                  });
                 },
               ),
             ),
-            Row(
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("添加Marker"),
-                  onPressed: _addMarker,
+            Column(
+              children: [
+                Row(
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text("添加Marker"),
+                      onPressed: _addMarker,
+                    ),
+                    RaisedButton(
+                      child: Text("删除Marker"),
+                      onPressed: () {
+                        setState(() {
+                          markers.clear();
+                          print(markers);
+                        });
+                      },
+                    ),
+                    RaisedButton(
+                      child: Text("单个删除"),
+                      onPressed: () {
+                        setState(() {
+                          markers.remove(centerMarkerId);
+                        });
+                      },
+                    ),
+                  ],
                 ),
-                RaisedButton(
-                  child: Text("删除Marker"),
-                  onPressed: () {
-                    setState(() {
-                      markers.clear();
-                      print(markers);
-                    });
-                  },
-                ),
-                RaisedButton(
-                  child: Text("单个删除"),
-                  onPressed: () {
-                    setState(() {
-                      markers.remove(centerMarkerId);
-                    });
-                  },
-                ),
-                RaisedButton(
-                  child: Text("更新"),
-                  onPressed: () {
-                    setState(() {
-                      markers.update(centerMarkerId,(Marker marker) {
-                        return marker.copyWith(showInfoWindow: true, infoWindowParam: InfoWindow(title:"3322",snippet: "333"));
-                      });
-                    });
-                  },
+                Row(
+                  children: <Widget>[
+                    RaisedButton(
+                      child: Text("更新"),
+                      onPressed: () {
+                        setState(() {
+                          markers.update(centerMarkerId, (Marker marker) {
+                            return marker.copyWith(showInfoWindow: true, infoWindowParam: InfoWindow(title: "3322", snippet: "333"));
+                          });
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -137,7 +140,6 @@ class _MyAppState extends State<MyApp> {
       "assets/images/map.png",
       Label(text: "$_markerIdCounter", size: 48, color: Colors.red, offset: Offset(-1, 10)),
     );
-    print(markerIcon.toMap());
     setState(() {
       markers[markerId] = Marker(
         markerId: markerId,
