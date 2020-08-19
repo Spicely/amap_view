@@ -92,35 +92,44 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     
     // 绘制marker
     func mapView(_ mapView: MAMapView!, viewFor annotation: MAAnnotation!) -> MAAnnotationView! {
-        let ops =  markerController.markerIdToOptions.first(where:{ (arr,val) -> Bool in
-            if let v = val as? [String: Any] {
-                if let position = v["position"] as? [String: Double] {
-                    if (position["latitude"] == annotation.coordinate.latitude && position["longitude"] == annotation.coordinate.longitude ){
-                        return true
-                    }
-                    return false
-                }
-            }
-            return false
-        })
-        if(ops == nil) {
-            return nil
-        }
         if annotation.isKind(of: MAPointAnnotation.self) {
+            let ops =  markerController.markerIdToOptions.first(where:{ (arr,val) -> Bool in
+                if let v = val as? [String: Any] {
+                    if let position = v["position"] as? [String: Double] {
+                        if (position["latitude"] == annotation.coordinate.latitude && position["longitude"] == annotation.coordinate.longitude ){
+                            return true
+                        }
+                        return false
+                    }
+                }
+                return false
+            })
+            if(ops == nil) {
+                return nil
+            }
             let pointReuseIndetifier = "pointReuseIndetifier"
             var annotationView: MAPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
             
             if annotationView == nil {
                 annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
             }
-            annotationView!.canShowCallout = true
-            annotationView!.animatesDrop = true
-            annotationView!.isDraggable = true
-            //                annotation.
-            
-            if let opts = ops as? [String: Any] {
-                if let icon = opts["icon"] as? [String: Any] {
+            if let opts = ops?.value as? [String: Any] {
+                if let icon = opts["icon"] as? [Any] {
+                    switch icon[0] as! String {
+                    case "fromAssetImageWithText":
+                        print("---------22222-------")
+                          print(icon)
+                        print(icon[1])
+                        annotationView!.image = UIImage(named: icon[1] as! String, in: Bundle.main, compatibleWith: nil)
+                        
+                    default:
+                        print("----------------")
+                    }
                 }
+            } else {
+                annotationView!.canShowCallout = true
+                annotationView!.animatesDrop = true
+                annotationView!.isDraggable = true
             }
             // print(annotationView!.value(forKey: "markerId") as Any)
             //                annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)

@@ -143,7 +143,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       markers[markerId] = Marker(
         markerId: markerId,
-        icon: markerIcon,
+        // icon: markerIcon,
         showInfoWindow: true,
         position: LatLng(
             center.latitude + sin(_markerIdCounter * pi / 6.0) / 2000.0, center.longitude + sin(_markerIdCounter * pi / 6.0) / 2000.0),
