@@ -117,14 +117,25 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
                 if let icon = opts["icon"] as? [Any] {
                     switch icon[0] as! String {
                     case "fromAssetImageWithText":
-                        annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
-                        if annotationView == nil {
-                            annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
-                        }
+                        annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
                         annotationView!.canShowCallout = true
                         annotationView!.animatesDrop = true
                         annotationView!.isDraggable = true
                         annotationView!.image = UIImage(imageLiteralResourceName:  flutterRegister.lookupKey(forAsset: icon[1] as! String))
+                        
+                        if let labelText = icon[3] as? [String: Any] {
+                            if let offset = labelText["offset"] as? [Any] {
+                                let labelView = UILabel.init(frame: CGRect(x: offset[0] as! Int,y: offset[1] as! Int,width: annotationView!.image.cgImage?.width ?? 0,height: annotationView!.image.cgImage?.height ?? 0))
+                                labelView.font = UIFont.systemFont(ofSize: labelText["size"] as! CGFloat)
+                                if let color = labelText["color"] as? [Any] {
+                                    labelView.textColor = UIColor(red: color[0] as! CGFloat / 255, green: color[1] as! CGFloat / 255, blue: color[2] as! CGFloat / 255, alpha: 1)
+                                }
+                                labelView.textAlignment = NSTextAlignment.center
+                                labelView.text = labelText["text"] as? String
+                                annotationView?.addSubview(labelView)
+                            }
+                            
+                        }
                     default:
                         annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
                         
