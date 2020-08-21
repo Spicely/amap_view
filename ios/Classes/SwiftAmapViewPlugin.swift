@@ -11,9 +11,7 @@ public class SwiftAmapViewPlugin: NSObject, FlutterPlugin {
     }
    
     AMapServices.shared().enableHTTPS = true
-    
-    let channel = FlutterMethodChannel(name: "amap_view", binaryMessenger: registrar.messenger())
-    let instance = AmapViewFactory(withMessenger: registrar.messenger())
+    let instance = AmapViewFactory(withMessenger: registrar)
     registrar.register(instance, withId: "plugins.muka.com/amap_view")
   }
 }

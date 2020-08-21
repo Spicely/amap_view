@@ -18,8 +18,10 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
     private var mapView: MAMapView
     private var channel: FlutterMethodChannel
     private var markerController: MarkerController
+    private var flutterRegister: FlutterPluginRegistrar
     
-    init(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger messenger: FlutterBinaryMessenger) {
+    init(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?, binaryMessenger register: FlutterPluginRegistrar) {
+        flutterRegister = register
         
         // 解决 Failed to bind EAGLDrawable 错误
         // 如果frame是zeroed，则初始化一个宽高
@@ -32,13 +34,14 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
         mapView = MAMapView(frame: _frame)
         // 自动调整宽高
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        channel = FlutterMethodChannel(name: "plugins.muka.com/amap_view_\(viewId)", binaryMessenger: messenger)
+        channel = FlutterMethodChannel(name: "plugins.muka.com/amap_view_\(viewId)", binaryMessenger: register.messenger())
         
         markerController = MarkerController(withChannel: channel, withMap: mapView)
         
         super.init()
         
         channel.setMethodCallHandler(onMethodCall)
+        
         
         mapView.delegate = self
         
@@ -108,25 +111,31 @@ class AmapViewController: NSObject, FlutterPlatformView, MAMapViewDelegate, Amap
                 return nil
             }
             let pointReuseIndetifier = "pointReuseIndetifier"
-            var annotationView: MAPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
+            var annotationView: MAPinAnnotationView?
             
-            if annotationView == nil {
-                annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
-            }
             if let opts = ops?.value as? [String: Any] {
                 if let icon = opts["icon"] as? [Any] {
                     switch icon[0] as! String {
                     case "fromAssetImageWithText":
-                        print("---------22222-------")
-                          print(icon)
-                        print(icon[1])
-                        annotationView!.image = UIImage(named: icon[1] as! String, in: Bundle.main, compatibleWith: nil)
-                        
+                        annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
+                        if annotationView == nil {
+                            annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
+                        }
+                        annotationView!.canShowCallout = true
+                        annotationView!.animatesDrop = true
+                        annotationView!.isDraggable = true
+                        annotationView!.image = UIImage(imageLiteralResourceName:  flutterRegister.lookupKey(forAsset: icon[1] as! String))
                     default:
+                        annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: pointReuseIndetifier) as! MAPinAnnotationView?
+                        
+                        if annotationView == nil {
+                            annotationView = MAPinAnnotationView(annotation: annotation, reuseIdentifier: pointReuseIndetifier)
+                        }
                         print("----------------")
                     }
                 }
             } else {
+                print("233333333333333333333333")
                 annotationView!.canShowCallout = true
                 annotationView!.animatesDrop = true
                 annotationView!.isDraggable = true
