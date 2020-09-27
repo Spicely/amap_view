@@ -17,8 +17,6 @@ class Location {
 
   final double accuracy;
 
-  ReGeocode geocode;
-
   Location({
     this.latitude,
     this.longitude,
@@ -28,7 +26,6 @@ class Location {
     this.country,
     this.district,
     this.street,
-    this.geocode,
   });
 
   factory Location.fromJson(Map<dynamic, dynamic> json) => _$LocationFromJson(json);
@@ -38,15 +35,15 @@ class Location {
 
 Location _$LocationFromJson(Map<dynamic, dynamic> json) {
   return Location(
-      latitude: (json['latitude'] as num)?.toDouble(),
-      longitude: (json['longitude'] as num)?.toDouble(),
-      accuracy: (json['accuracy'] as num)?.toDouble(),
-      address: json['address'] as String,
-      city: json['city'] as String,
-      country: json['country'] as String,
-      district: json['district'] as String,
-      street: json['street'] as String,
-      geocode: json['geocode'] == null ? null : ReGeocode.fromJson(json['geocode'] as Map<dynamic, dynamic>));
+    latitude: (json['latitude'] as num)?.toDouble(),
+    longitude: (json['longitude'] as num)?.toDouble(),
+    accuracy: (json['accuracy'] as num)?.toDouble(),
+    address: json['address'] as String,
+    city: json['city'] as String,
+    country: json['country'] as String,
+    district: json['district'] as String,
+    street: json['street'] as String,
+  );
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
@@ -58,5 +55,4 @@ Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'street': instance.street,
       'district': instance.district,
       'accuracy': instance.accuracy,
-      'geocode': instance.geocode
     };
