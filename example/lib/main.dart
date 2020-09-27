@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     //   print('单次定位');
     //   setState(() {});
     // }
-    _location = await AmapLocation.fetch(geocode: true);
+    _location = await AmapLocation.fetch();
     print(_location.toJson());
     print('单次定位');
     setState(() {});
@@ -100,13 +100,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 );
               },
             ),
-            RaisedButton(
-              child: Text('地址转换'),
-              onPressed: () async {
-                // LatLng pos = await AmapLocation.convert(latLng: LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
-                // print(pos);
-              },
-            ),
+            // RaisedButton(
+            //   child: Text('地址转换'),
+            //   onPressed: () async {
+            //     // LatLng pos = await AmapLocation.convert(latLng: LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
+            //     // print(pos);
+            //   },
+            // ),
           ],
         ),
       ),

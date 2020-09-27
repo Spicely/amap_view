@@ -60,17 +60,13 @@ class AmapLocation {
   ///
   /// androidMode 定位方式 [ 仅适用android ]
   ///
-  /// geocode 返回逆编码信息
-  ///
   /// iosAccuracy 精确度 [ 仅适用ios ]
   static Future<Location> fetch({
     AmapLocationMode androidMode = AmapLocationMode.HIGHT_ACCURACY,
-    bool geocode = false,
     AmapLocationAccuracy iosAccuracy = AmapLocationAccuracy.THREE_KILOMETERS,
   }) async {
     dynamic location = await _channel.invokeMethod('fetch', {
       'mode': androidMode.index,
-      'geocode': geocode,
       'accuracy': iosAccuracy.index,
     });
     return Location.fromJson(location);
