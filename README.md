@@ -52,7 +52,7 @@ Flutter高德定位插件
     /// 停止定位
     stopLocation();
 
-    /// 单次定位 可传递geocode参数获取逆地理编码
+    /// 单次定位
     Location location = await AmapLocation.fetch();
     print(location.toJson());
 

@@ -8,14 +8,12 @@
 import Foundation
 import AMapFoundationKit
 import AMapLocationKit
-import AMapSearchKit
 
 
-class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamHandler, AMapSearchDelegate {
+class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamHandler {
     private var messenger: FlutterBinaryMessenger
     private var locationManager: AMapLocationManager
     private var fetchLocationManager: AMapLocationManager
-    private var search: AMapSearchAPI
     private var eventSink: FlutterEventSink?
     private var timer: Timer?
     private var interval: Int = 2000
@@ -28,10 +26,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         self.messenger = messenger
         locationManager = AMapLocationManager()
         fetchLocationManager = AMapLocationManager()
-        search = AMapSearchAPI()
         super.init()
-        
-        search.delegate = self
         
         locationManager.distanceFilter = 200
         locationManager.delegate = self
@@ -53,7 +48,6 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         switch methodCall.method {	
         case "fetch":
             let args = methodCall.arguments as? [String: Any]
-            let geocode = args?["geocode"] as? Bool
             var accuracy = args?["accuracy"] as? Int
             if (accuracy == nil) {
                 accuracy = 0
@@ -85,16 +79,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                         dataMap["street"] = reGeocode.street
                         dataMap["district"] = reGeocode.district
                     }
-                    if (geocode == true) {
-                        let request = AMapReGeocodeSearchRequest()
-                        request.location = AMapGeoPoint.location(withLatitude: CGFloat(location.coordinate.latitude), longitude: CGFloat(location.coordinate.longitude))
-                        request.requireExtension = true
-                        self.search.aMapReGoecodeSearch(request)
-                        self.fetchLoca = dataMap
-                        self.fetchSink = result
-                    } else {
-                        result(dataMap)
-                    }
+                    result(dataMap)
                 }
             }
         case "start":
@@ -124,7 +109,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 locationManager.startUpdatingLocation()
             }
             result(nil)
-        case "top":
+        case "stop":
             locationManager.stopUpdatingLocation()
             timer?.invalidate()
             result(nil)
@@ -152,27 +137,6 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         if (mapLoca != nil) {
             eventSink?(mapLoca)
         }
-    }
-    
-    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) {
-     
-        if response.regeocode == nil {
-            fetchSink?(nil)
-            return
-        }
-        if fetchLoca == nil {
-            fetchSink?(nil)
-            return
-        }
-        var pois = [Dictionary<String, Any>]()
-        for v in response.regeocode.pois {
-            let poi: Dictionary<String, Any> = ["adcode":v.adcode as Any, "address": v.address as Any, "businessArea": v.businessArea as Any, "city":v.city as Any, "citycode":v.citycode as Any,"direction":v.direction as Any,"distance":v.distance,"district": v.district as Any,"email":v.email as Any,"gridcode":v.gridcode as Any,"hasIndoorMap":v.hasIndoorMap,"name":v.name as Any,"parkingType":v.parkingType as Any,"pcode":v.pcode as Any,"postcode":v.postcode as Any,"province":v.province as Any,"shopID":v.shopID as Any,"tel":v.tel as Any,"type":v.type as Any,"typecode":v.typecode as Any,"uid":v.uid as Any,"website":v.website as Any, "latitude": v.location.latitude, "longitude":v.location.longitude]
-            pois.append(poi)
-        }
-
-        let geocode: Dictionary<String, Any> = ["adcode":response.regeocode.addressComponent.adcode as Any, "building":response.regeocode.addressComponent.building as Any,"city":response.regeocode.addressComponent.city as Any, "citycode":response.regeocode.addressComponent.citycode as Any,"formatAddress": response.regeocode.formattedAddress as Any, "country":response.regeocode.addressComponent.country as Any,"district":response.regeocode.addressComponent.district as Any,"province":response.regeocode.addressComponent.province as Any,"streetNumber":response.regeocode.addressComponent.streetNumber.number as Any,"township":response.regeocode.addressComponent.township as Any,"pois": pois]
-        fetchLoca!["geocode"] = geocode
-        fetchSink?(fetchLoca)
     }
     
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {

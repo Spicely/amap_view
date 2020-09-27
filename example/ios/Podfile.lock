@@ -1,12 +1,9 @@
 PODS:
   - amap_location (0.0.1):
     - AMapLocation
-    - AMapSearch
     - Flutter
   - AMapFoundation (1.6.3)
   - AMapLocation (2.6.5):
-    - AMapFoundation (~> 1.6.3)
-  - AMapSearch (7.4.0):
     - AMapFoundation (~> 1.6.3)
   - Flutter (1.0.0)
   - "permission_handler (5.0.1+1)":
@@ -21,7 +18,6 @@ SPEC REPOS:
   trunk:
     - AMapFoundation
     - AMapLocation
-    - AMapSearch
 
 EXTERNAL SOURCES:
   amap_location:
@@ -32,10 +28,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
-  amap_location: cd2e11b061d003f3db6f2ce5cd595afdc6700bb1
+  amap_location: fc99a507a8954b9e28dce094fdbe8aa15767768c
   AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
   AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
-  AMapSearch: b7a96e6208c1d022964559ab8641644f350ab5ac
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
 
