@@ -9,7 +9,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -35,8 +34,7 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
     private lateinit var watchClient: AMapLocationClient
     private var channelId: String = "plugins.muka.com/amap_location_server"
     private var notificationManager: NotificationManager? = null
-    private var geocodeSink: Result? = null
-    private var locaPos : HashMap<String, Any>? = null
+    private var isCreateChannel = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -128,29 +126,46 @@ public class AmapLocationPlugin : FlutterPlugin, MethodCallHandler, EventChannel
     }
 
     private fun buildNotification(title: String, label: String, name: String, vibrate: Boolean): Notification? {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var notificationChannel = NotificationChannel(channelId, pluginBinding.applicationContext.packageName, NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.enableLights(true) //是否在桌面icon右上角展示小圆点
-            notificationChannel.lightColor = Color.BLUE //小圆点颜色
-            notificationChannel.setShowBadge(true) //是否在久按桌面图标时显示此渠道的通知
-
-            if (!vibrate) {
-                notificationChannel.enableVibration(false)
-                notificationChannel.vibrationPattern = null
-                notificationChannel.setSound(null, null)
+        var builder: Notification.Builder? = null
+        var notification: Notification? = null
+        if (Build.VERSION.SDK_INT >= 26) {
+            if (null == notificationManager) {
+                notificationManager = pluginBinding.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             }
-            notificationManager = pluginBinding.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager?.createNotificationChannel(notificationChannel);
+            if(!isCreateChannel) {
+                var notificationChannel = NotificationChannel(channelId, pluginBinding.applicationContext.packageName, NotificationManager.IMPORTANCE_HIGH);
+                notificationChannel.enableLights(true) //是否在桌面icon右上角展示小圆点
+                notificationChannel.lightColor = Color.BLUE //小圆点颜色
+                notificationChannel.setShowBadge(true) //是否在久按桌面图标时显示此渠道的通知
+                if (!vibrate) {
+                    notificationChannel.enableVibration(false)
+                    notificationChannel.vibrationPattern = null
+                    notificationChannel.setSound(null, null)
+                }
+                notificationManager?.createNotificationChannel(notificationChannel);
+            }
+            builder = Notification.Builder(pluginBinding.applicationContext, channelId)
+        } else {
+            builder = Notification.Builder(pluginBinding.applicationContext)
         }
         var intent = Intent(pluginBinding.applicationContext, getMainActivityClass(pluginBinding.applicationContext))
         var pendingIntent = PendingIntent.getActivity(pluginBinding.applicationContext, Random.nextInt(100), intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        var notification = NotificationCompat.Builder(pluginBinding.applicationContext, channelId).setContentTitle(title).setContentText(label).setWhen(System.currentTimeMillis()).setSmallIcon(getDrawableResourceId(name)).setLargeIcon(BitmapFactory.decodeResource(pluginBinding.applicationContext.resources, getDrawableResourceId(name))).setContentIntent(pendingIntent)
+        builder
+                .setContentTitle(title).setContentText(label)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(getDrawableResourceId(name))
+                .setLargeIcon(BitmapFactory.decodeResource(pluginBinding.applicationContext.resources, getDrawableResourceId(name)))
+                .setContentIntent(pendingIntent)
         if (!vibrate) {
-            notification.setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
+            builder.setDefaults(NotificationCompat.FLAG_ONLY_ALERT_ONCE)
         }
-        return notification.build()
+        if (Build.VERSION.SDK_INT >= 16) {
+            notification = builder.build();
+        } else {
+            return builder.getNotification();
+        }
+        return notification
     }
 
     private fun getMainActivityClass(context: Context): Class<*>? {
