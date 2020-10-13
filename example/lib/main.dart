@@ -32,10 +32,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
         break;
       case AppLifecycleState.resumed: // 应用程序可见，前台
+      print('22111112122');
         await AmapLocation.disableBackground();
         break;
       case AppLifecycleState.paused: // 应用程序不可见，后台
-        print('2222');
+        print('22222222');
         await AmapLocation.enableBackground(assetName: 'app_icon', label: '正在获取位置信息', title: '高德地图', vibrate: false);
         break;
       default:
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await [Permission.accessMediaLocation, Permission.location, Permission.locationAlways, Permission.locationWhenInUse].request();
+    await [Permission.locationAlways, Permission.locationWhenInUse, Permission.location].request();
     print('单次定位');
     _location = await AmapLocation.fetch();
     print(_location.toJson());

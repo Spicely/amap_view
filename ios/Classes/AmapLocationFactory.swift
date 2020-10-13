@@ -34,6 +34,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
         
         fetchLocationManager.distanceFilter = 200
         fetchLocationManager.delegate = self
+        fetchLocationManager.locatingWithReGeocode = true
     }
     
     func register() {
@@ -115,7 +116,10 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             result(nil)
         case "enableBackground":
             locationManager.stopUpdatingLocation()
-            locationManager.allowsBackgroundLocationUpdates = true
+            locationManager.pausesLocationUpdatesAutomatically = false
+            if UIDevice.current.systemVersion._bridgeToObjectiveC().doubleValue >= 9.0 {
+                locationManager.allowsBackgroundLocationUpdates = true
+            }
             timer?.invalidate()
             start = true
             timer = Timer.scheduledTimer(timeInterval: TimeInterval(interval / 1000), target: self, selector: #selector(sinkLocation(_:)), userInfo: nil, repeats: true)
@@ -138,7 +142,6 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
             eventSink?(mapLoca)
         }
     }
-    
     func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) {
         self.fetchSink?(nil)
     }
