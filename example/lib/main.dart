@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       case AppLifecycleState.inactive: // 处于这种状态的应用程序应该假设它们可能在任何时候暂停。
         break;
       case AppLifecycleState.resumed: // 应用程序可见，前台
-      print('22111112122');
+        print('22111112122');
         await AmapLocation.disableBackground();
         break;
       case AppLifecycleState.paused: // 应用程序不可见，后台
