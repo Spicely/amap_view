@@ -16,7 +16,7 @@ import java.net.URL
 import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLngBounds
 import com.amap.api.maps.model.LatLng
-import com.amap.api.navi.services.search.model.LatLonPoint
+import com.amap.api.navi.model.search.LatLonPoint
 import com.google.gson.Gson
 
 
@@ -397,34 +397,34 @@ class Convert {
         fun toJson(latLng: LatLng): Any {
             // return Arrays.asList(latLng.latitude, latLng.longitude)
             val data = HashMap<String, Any>()
-            data.put("latitude", latLng.latitude)
-            data.put("longitude", latLng.longitude)
+            data["latitude"] = latLng.latitude
+            data["longitude"] = latLng.longitude
             return data
         }
 
         fun toJson(location: Location): Any {
             val data = HashMap<String, Any>()
-            data.put("latitude", location.latitude)
-            data.put("longitude", location.longitude)
-            data.put("accuracy", location.accuracy)
-            data.put("speed", location.speed)
-            data.put("time", location.time)
+            data["latitude"] = location.latitude
+            data["longitude"] = location.longitude
+            data["accuracy"] = location.accuracy
+            data["speed"] = location.speed
+            data["time"] = location.time
             return data
         }
 
         fun toJson(position: CameraPosition): Any {
             val data = HashMap<String, Any>()
-            data.put("bearing", position.bearing)
-            data.put("target", toJson(position.target))
-            data.put("tilt", position.tilt)
-            data.put("zoom", position.zoom)
+            data["bearing"] = position.bearing
+            data["target"] = toJson(position.target)
+            data["tilt"] = position.tilt
+            data["zoom"] = position.zoom
             return data
         }
 
         fun toJson(point: LatLonPoint): Any {
             val data = HashMap<String, Any>()
-            data.put("longitude", point.longitude)
-            data.put("latitude", point.latitude)
+            data["longitude"] = point.longitude
+            data["latitude"] = point.latitude
             return data
         }
 
