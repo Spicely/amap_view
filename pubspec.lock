@@ -4,11 +4,9 @@ packages:
   amap_core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: core
-      resolved-ref: "4e7750eeecff8758427ba84974129e33a1500fe9"
-      url: "https://github.com/Spicely/amap_view.git"
-    source: git
+      name: amap_core
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.0.1"
   async:
     dependency: transitive

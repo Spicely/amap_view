@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:amap_location/amap_location.dart';
+import 'package:amap_location_muka/amap_location.dart';
 
 void main() {
   runApp(MyApp());
