@@ -4,11 +4,9 @@ packages:
   amap_core:
     dependency: "direct main"
     description:
-      path: "."
-      ref: core
-      resolved-ref: fa51f548e921d52d12133cb1e24647b3796c25f1
-      url: "https://github.com/Spicely/amap_view.git"
-    source: git
+      name: amap_core
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   async:
     dependency: transitive

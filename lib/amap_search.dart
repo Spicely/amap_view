@@ -1,4 +1,4 @@
-library amap_search;
+library amap_search_muka;
 
 import 'dart:async';
 import 'package:amap_core/amap_core.dart';

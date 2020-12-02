@@ -1,4 +1,4 @@
-part of amap_search;
+part of amap_search_muka;
 
 enum ConvertType {
   /// GPS
