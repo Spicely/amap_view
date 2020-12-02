@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amap_search/amap_search.dart';
+import 'package:amap_search_muka/amap_search.dart';
 import 'package:amap_core/amap_core.dart';
 
 void main() {
@@ -32,21 +32,21 @@ class _MyAppState extends State<MyApp> {
             RaisedButton(
               child: Text('坐标转换'),
               onPressed: () async {
-                LatLng pos = await AmapUtils.convert(LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
+                LatLng pos = await AmapSearch.convert(LatLng(40.012044, 116.332404), type: ConvertType.BAIDU);
                 print(pos);
               },
             ),
             RaisedButton(
               child: Text('面积'),
               onPressed: () async {
-                double area = await AmapUtils.calculateArea(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
+                double area = await AmapSearch.calculateArea(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
                 print(area);
               },
             ),
             RaisedButton(
               child: Text('直线距离'),
               onPressed: () async {
-                double distance = await AmapUtils.calculateLineDistance(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
+                double distance = await AmapSearch.calculateLineDistance(LatLng(30.766903, 103.955872), LatLng(30.577889, 104.169418));
                 print(distance);
               },
             ),
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
               child: Text('获取POI'),
               onPressed: () async {
                 print('获取POI');
-                List<SearchPoi> pois = await AmapSearch.poiKeywordsSearch('火车站');
+                List<SearchPoi> pois = await AmapSearch.poiKeywordsSearch('火车站', city: '成都');
                 print(pois.toList());
               },
             ),
@@ -63,7 +63,9 @@ class _MyAppState extends State<MyApp> {
               onPressed: () async {
                 print('获取输入提示');
                 List<InputTip> pois = await AmapSearch.inputTipsSearch('火车');
-                pois.forEach((element) {print(element.toJson());});
+                pois.forEach((element) {
+                  print(element.toJson());
+                });
               },
             ),
           ],

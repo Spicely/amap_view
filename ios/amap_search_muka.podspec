@@ -3,9 +3,9 @@
 # Run `pod lib lint amap_search.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'amap_search'
+  s.name             = 'amap_search_muka'
   s.version          = '0.0.1'
-  s.summary          = 'Flutter amap_search'
+  s.summary          = 'Flutter amap_search_muka'
   s.description      = <<-DESC
 Flutter amap_search
                        DESC
@@ -17,8 +17,8 @@ Flutter amap_search
   s.public_header_files = 'Classes/**/*.h'
   s.static_framework = true
   s.dependency 'Flutter'
-  s.dependency 'AMapLocation'
   s.dependency 'AMapSearch'
+  s.dependency 'AMapNavi'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.

@@ -1,5 +1,16 @@
 part of amap_search;
 
+enum ConvertType {
+  /// GPS
+  GPS,
+
+  /// 百度
+  BAIDU,
+
+  /// Google
+  GOOGLE,
+}
+
 class AmapSearch {
   static const MethodChannel _channel = const MethodChannel('plugins.muka.com/amap_search');
 
@@ -12,9 +23,9 @@ class AmapSearch {
   /// location [如果设置，在此location附近优先返回搜索关键词信息]
   ///
   /// 请求多次只返回一次 所以尽量请求时给个loading
-  /// 
+  ///
   /// pageSize 每页返回的个数
-  /// 
+  ///
   /// pageNum 第几页
   static Future<List<SearchPoi>> poiKeywordsSearch(
     String keywords, {
@@ -56,7 +67,6 @@ class AmapSearch {
     return List<InputTip>.from(inputTips.map((i) => InputTip.fromJson(i)));
   }
 
-
   /// 逆地理编码
   ///
   /// 请求多次只返回一次 所以尽量请求时给个loading
@@ -66,5 +76,32 @@ class AmapSearch {
       'longitude': latLng.longitude,
     });
     return ReGeocode.fromJson(reGeocode);
+  }
+
+  /// 地址转换
+  ///
+  /// 仅[Android]可用
+  static Future<LatLng> convert(LatLng latLng, {ConvertType type = ConvertType.GPS}) async {
+    dynamic data = await _channel.invokeMethod('convert', {
+      'latlng': latLng.toJson(),
+      'type': type.index,
+    });
+    return LatLng.fromJson(data);
+  }
+
+  /// 直线距离计算
+  static Future<double> calculateLineDistance(LatLng start, LatLng end) async {
+    return await _channel.invokeMethod('calculateLineDistance', {
+      "start": start?.toJson(),
+      "end": end?.toJson(),
+    });
+  }
+
+  /// 面积计算
+  static Future<double> calculateArea(LatLng start, LatLng end) async {
+    return await _channel.invokeMethod('calculateArea', {
+      "start": start?.toJson(),
+      "end": end?.toJson(),
+    });
   }
 }

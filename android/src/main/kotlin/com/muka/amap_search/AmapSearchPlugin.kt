@@ -57,8 +57,6 @@ public class AmapSearchPlugin : FlutterPlugin, MethodCallHandler, GeocodeSearch.
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "plugins.muka.com/amap_search")
             channel.setMethodCallHandler(AmapSearchPlugin())
-//            val utilsChannel = MethodChannel(registrar.messenger(), "plugins.muka.com/amap_utils")
-//            utilsChannel.setMethodCallHandler(AmapSearchPlugin());
         }
     }
 

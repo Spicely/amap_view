@@ -1,38 +1,38 @@
 PODS:
-  - amap_search (0.0.1):
-    - AMapLocation
+  - amap_search_muka (0.0.1):
+    - AMapNavi
     - AMapSearch
     - Flutter
-  - AMapFoundation (1.6.3)
-  - AMapLocation (2.6.5):
-    - AMapFoundation (~> 1.6.3)
-  - AMapSearch (7.3.0):
+  - AMapFoundation (1.6.4)
+  - AMapNavi (7.6.0):
+    - AMapFoundation (~> 1.6.4)
+  - AMapSearch (7.6.0):
     - AMapFoundation (~> 1.6.3)
   - Flutter (1.0.0)
 
 DEPENDENCIES:
-  - amap_search (from `.symlinks/plugins/amap_search/ios`)
+  - amap_search_muka (from `.symlinks/plugins/amap_search_muka/ios`)
   - Flutter (from `Flutter`)
 
 SPEC REPOS:
   https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AMapFoundation
-    - AMapLocation
+    - AMapNavi
     - AMapSearch
 
 EXTERNAL SOURCES:
-  amap_search:
-    :path: ".symlinks/plugins/amap_search/ios"
+  amap_search_muka:
+    :path: ".symlinks/plugins/amap_search_muka/ios"
   Flutter:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  amap_search: e50d3a9fd61b8b14cc3f5637bd765d50475b6981
-  AMapFoundation: 9ed923193b357ebb30a073e9fe255d3c24054d5a
-  AMapLocation: c566d448285cd502c1e313063d9e2460bd4d7100
-  AMapSearch: a048bcca3bf0b8083345070e1f193f814bd8dc01
+  amap_search_muka: fdcdcb5173a30e2cdb51b338b25739c2e69ae288
+  AMapFoundation: 3638198dfa40be54648570c3520edefad288286b
+  AMapNavi: ca9fe7272aff9cede055e4cbfcb462d5a4896f8a
+  AMapSearch: ea3151e626c91b1ef99ec0ec72afdbdb577e16b2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
 
 PODFILE CHECKSUM: 0c52a58316c6137615e1e90610345e626f52a2aa
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0.beta.1

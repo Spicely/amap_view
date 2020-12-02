@@ -8,7 +8,7 @@
 import Foundation
 import AMapFoundationKit
 import AMapSearchKit
-
+import AMapNaviKit
 
 class AmapSearchFactory: NSObject, AMapSearchDelegate {
     private var messenger: FlutterBinaryMessenger
@@ -32,6 +32,19 @@ class AmapSearchFactory: NSObject, AMapSearchDelegate {
 
     func onMethodCall(methodCall: FlutterMethodCall, result: @escaping FlutterResult) {
         switch methodCall.method {
+        case "convert":
+            let latLng: Dictionary<String, Any> = ["latitude": 0.0, "longitude":0.0]
+            result(latLng)
+        case "calculateLineDistance":
+            if let args = methodCall.arguments as? [String: Any] {
+                let start = args["start"] as! Dictionary<String, Any>
+                let end = args["end"] as! Dictionary<String, Any>
+                let point1 = MAMapPointForCoordinate(CLLocationCoordinate2D(latitude: start["latitude"] as! CLLocationDegrees, longitude:start["longitude"] as! CLLocationDegrees))
+                let point2 = MAMapPointForCoordinate(CLLocationCoordinate2D(latitude: end["latitude"] as! CLLocationDegrees, longitude:end["longitude"] as! CLLocationDegrees))
+                let distance = MAMetersBetweenMapPoints(point1,point2);
+                result(distance)
+            }
+        case "calculateArea": result(0.0)
         case "poiKeywordsSearch":
             if let args = methodCall.arguments as? [String: Any] {
                 let latitude = args["latitude"] as? CGFloat
