@@ -17,6 +17,9 @@ class Location {
 
   final double accuracy;
 
+  /// 省
+  final String province;
+
   Location({
     this.latitude,
     this.longitude,
@@ -26,6 +29,7 @@ class Location {
     this.country,
     this.district,
     this.street,
+    this.province,
   });
 
   factory Location.fromJson(Map<dynamic, dynamic> json) => _$LocationFromJson(json);
@@ -43,6 +47,7 @@ Location _$LocationFromJson(Map<dynamic, dynamic> json) {
     country: json['country'] as String,
     district: json['district'] as String,
     street: json['street'] as String,
+    province: json['province'] as String,
   );
 }
 
@@ -55,4 +60,5 @@ Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'street': instance.street,
       'district': instance.district,
       'accuracy': instance.accuracy,
+      'province': instance.province,
     };
