@@ -70,7 +70,7 @@ ReGeocode _$ReGeocodeFromJson(Map<dynamic, dynamic> json) {
     province: json['province'] as String?,
     towncode: json['towncode'] as String?,
     township: json['township'] as String?,
-    pois: (json['pois'] as List?)?.map((e) => e == null ? null : ReGeocode.fromJson(new Map<String, dynamic>.from(e)))?.toList(),
+    pois: (json['pois'] as List?)?.map((e) => e == null ? null : ReGeocode.fromJson(new Map<String, dynamic>.from(e))).toList(),
     building: json['building'] as String?,
     city: json['city'] as String?,
     district: json['district'] as String?,
