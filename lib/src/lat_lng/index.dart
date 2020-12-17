@@ -5,14 +5,12 @@ part of amap_core;
 
 // @JsonSerializable()
 class LatLng {
-  LatLng(this.latitude, this.longitude)
-      : assert(latitude != null),
-        assert(longitude != null);
+  LatLng(this.latitude, this.longitude);
 
   final double latitude;
   final double longitude;
 
- factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
+  factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
 
   Map<String, dynamic> toJson() => _$LatLngToJson(this);
 }
@@ -23,8 +21,8 @@ class LatLng {
 
 LatLng _$LatLngFromJson(Map<String, dynamic> json) {
   return LatLng(
-    (json['latitude'] as num)?.toDouble(),
-    (json['longitude'] as num)?.toDouble(),
+    (json['latitude'] as num).toDouble(),
+    (json['longitude'] as num).toDouble(),
   );
 }
 

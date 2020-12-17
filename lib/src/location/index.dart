@@ -1,24 +1,24 @@
 part of amap_core;
 
 class Location {
-  final double latitude;
+  final double? latitude;
 
-  final double longitude;
+  final double? longitude;
 
-  final String address;
+  final String? address;
 
-  final String country;
+  final String? country;
 
-  final String city;
+  final String? city;
 
-  final String street;
+  final String? street;
 
-  final String district;
+  final String? district;
 
-  final double accuracy;
+  final double? accuracy;
 
   /// 省
-  final String province;
+  final String? province;
 
   Location({
     this.latitude,
@@ -39,15 +39,15 @@ class Location {
 
 Location _$LocationFromJson(Map<dynamic, dynamic> json) {
   return Location(
-    latitude: (json['latitude'] as num)?.toDouble(),
-    longitude: (json['longitude'] as num)?.toDouble(),
-    accuracy: (json['accuracy'] as num)?.toDouble(),
-    address: json['address'] as String,
-    city: json['city'] as String,
-    country: json['country'] as String,
-    district: json['district'] as String,
-    street: json['street'] as String,
-    province: json['province'] as String,
+    latitude: (json['latitude'] as num?)?.toDouble(),
+    longitude: (json['longitude'] as num?)?.toDouble(),
+    accuracy: (json['accuracy'] as num?)?.toDouble(),
+    address: json['address'] as String?,
+    city: json['city'] as String?,
+    country: json['country'] as String?,
+    district: json['district'] as String?,
+    street: json['street'] as String?,
+    province: json['province'] as String?,
   );
 }
 
