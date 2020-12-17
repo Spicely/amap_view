@@ -79,6 +79,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                         dataMap["city"] = reGeocode.city
                         dataMap["street"] = reGeocode.street
                         dataMap["district"] = reGeocode.district
+                        dataMap["province"] = reGeocode.province
                     }
                     result(dataMap)
                 }
@@ -164,6 +165,7 @@ class AmapLocationFactory: NSObject, AMapLocationManagerDelegate, FlutterStreamH
                 dataMap["city"] = reGeocode.city
                 dataMap["street"] = reGeocode.street
                 dataMap["district"] = reGeocode.district
+                dataMap["province"] = reGeocode.province
             }
             self.mapLoca = dataMap
             if (start) {
