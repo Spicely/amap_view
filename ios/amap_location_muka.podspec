@@ -3,7 +3,7 @@
 # Run `pod lib lint amap_location.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'amap_location'
+  s.name             = 'amap_location_muka'
   s.version          = '0.0.1'
   s.summary          = 'Flutter高德定位插件'
   s.description      = <<-DESC

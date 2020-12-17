@@ -5,7 +5,7 @@ Flutter高德定位插件
 ## 引入方式
 
 ```
-    amap_location:
+    amap_location_muka:
       git:
         url: https://github.com/Spicely/amap_view.git
         ref: location
