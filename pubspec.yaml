@@ -1,6 +1,6 @@
 name: amap_location_muka
 description: Flutter高德定位插件
-version: 0.0.1+1
+version: 0.0.1+2
 homepage: https://github.com/Spicely/amap_view/tree/location
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  amap_core: ^0.0.1
+  amap_core: ^0.0.2
 
 dev_dependencies:
   flutter_test:
