@@ -1,6 +1,6 @@
 name: amap_core
 description: A new Flutter package.
-version: 1.0.0-nullsafety.0
+version: 1.0.0-nullsafety.1
 homepage: https://github.com/Spicely/amap_view/tree/core
 
 environment:
@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  js: 0.6.3-nullsafety.3
 
 dev_dependencies:
   flutter_test:
