@@ -1,6 +1,5 @@
 library amap_core;
 
-export 'package:js/js.dart';
 export 'src/web/amap.dart';
 export 'src/web/loader.dart';
 
