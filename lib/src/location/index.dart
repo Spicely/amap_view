@@ -1,30 +1,30 @@
 part of amap_core;
 
 class Location {
-  final double? latitude;
+  final double latitude;
 
-  final double? longitude;
+  final double longitude;
 
   /// 地址
-  final String? address;
+  final String address;
 
   /// 国家
-  final String? country;
+  final String country;
 
   /// 省
-  final String? province;
+  final String province;
 
   /// 市
-  final String? city;
+  final String city;
 
   /// 区
-  final String? district;
+  final String district;
 
   /// 街道
-  final String? street;
+  final String street;
 
   /// 精准度 [在web端直接返回0]
-  final double? accuracy;
+  final double accuracy;
 
   Location({
     this.latitude,
@@ -45,15 +45,15 @@ class Location {
 
 Location _$LocationFromJson(Map<dynamic, dynamic> json) {
   return Location(
-    latitude: (json['latitude'] as num?)?.toDouble(),
-    longitude: (json['longitude'] as num?)?.toDouble(),
-    accuracy: (json['accuracy'] as num?)?.toDouble(),
-    address: json['address'] as String?,
-    city: json['city'] as String?,
-    country: json['country'] as String?,
-    district: json['district'] as String?,
-    street: json['street'] as String?,
-    province: json['province'] as String?,
+    latitude: (json['latitude'] as num).toDouble(),
+    longitude: (json['longitude'] as num).toDouble(),
+    accuracy: (json['accuracy'] as num).toDouble(),
+    address: json['address'] as String,
+    city: json['city'] as String,
+    country: json['country'] as String,
+    district: json['district'] as String,
+    street: json['street'] as String,
+    province: json['province'] as String,
   );
 }
 

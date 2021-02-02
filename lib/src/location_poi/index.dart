@@ -2,76 +2,76 @@ part of amap_core;
 
 class LocationPoi {
   ///POI全局唯一ID
-  final String? uid;
+  final String uid;
 
   ///名称
-  final String? name;
+  final String name;
 
   ///兴趣点类型
-  final String? type;
+  final String type;
 
   ///类型编码
-  final String? typecode;
+  final String typecode;
 
   ///地址
-  final String? address;
+  final String address;
 
   ///电话
-  final String? tel;
+  final String tel;
 
   ///距中心点的距离，单位米。在周边搜索时有效
-  final double? distance;
+  final double distance;
 
   ///停车场类型，地上、地下、路边
-  final String? parkingType;
+  final String parkingType;
 
   ///商铺id
-  final String? shopID;
+  final String shopID;
 
   ///邮编
-  final String? postcode;
+  final String postcode;
 
   ///网址
-  final String? website;
+  final String website;
 
   ///电子邮件
-  final String? email;
+  final String email;
 
   ///省
-  final String? province;
+  final String province;
 
   ///省编码
-  final String? pcode;
+  final String pcode;
 
   ///城市名称
-  final String? city;
+  final String city;
 
   ///城市编码
-  final String? citycode;
+  final String citycode;
 
   ///区域名称
-  final String? district;
+  final String district;
 
   ///区域编码
-  final String? adcode;
+  final String adcode;
 
   ///地理格ID
-  final String? gridcode;
+  final String gridcode;
 
   ///方向
-  final String? direction;
+  final String direction;
 
   ///是否有室内地图
-  final bool? hasIndoorMap;
+  final bool hasIndoorMap;
 
   ///所在商圈
-  final String? businessArea;
+  final String businessArea;
 
   /// 纬度（垂直方向）
-  final double? latitude;
+  final double latitude;
 
   /// 经度（水平方向）
-  final double? longitude;
+  final double longitude;
 // ///室内信息
 // @property (nonatomic, strong) AMapIndoorData *indoorData;
 // ///子POI列表
@@ -113,30 +113,30 @@ class LocationPoi {
 
 LocationPoi _$LocationPoiFromJson(Map<dynamic, dynamic> json) {
   return LocationPoi(
-      json['adcode'] as String?,
-      json['address'] as String?,
-      json['businessArea'] as String?,
-      json['city'] as String?,
-      json['citycode'] as String?,
-      json['province'] as String?,
-      json['direction'] as String?,
-      (json['distance'] as num?)?.toDouble(),
-      json['district'] as String?,
-      json['email'] as String?,
-      json['gridcode'] as String?,
-      json['hasIndoorMap'] as bool?,
-      json['name'] as String?,
-      json['parkingType'] as String?,
-      json['pcode'] as String?,
-      json['postcode'] as String?,
-      json['shopID'] as String?,
-      json['tel'] as String?,
-      json['type'] as String?,
-      json['typecode'] as String?,
-      json['uid'] as String?,
-      json['website'] as String?,
-      (json['latitude'] as num?)?.toDouble(),
-      (json['longitude'] as num?)?.toDouble());
+      json['adcode'] as String,
+      json['address'] as String,
+      json['businessArea'] as String,
+      json['city'] as String,
+      json['citycode'] as String,
+      json['province'] as String,
+      json['direction'] as String,
+      (json['distance'] as num).toDouble(),
+      json['district'] as String,
+      json['email'] as String,
+      json['gridcode'] as String,
+      json['hasIndoorMap'] as bool,
+      json['name'] as String,
+      json['parkingType'] as String,
+      json['pcode'] as String,
+      json['postcode'] as String,
+      json['shopID'] as String,
+      json['tel'] as String,
+      json['type'] as String,
+      json['typecode'] as String,
+      json['uid'] as String,
+      json['website'] as String,
+      (json['latitude'] as num).toDouble(),
+      (json['longitude'] as num).toDouble());
 }
 
 Map<String, dynamic> _$LocationPoisToJson(LocationPoi instance) => <String, dynamic>{

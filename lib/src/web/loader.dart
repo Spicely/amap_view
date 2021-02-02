@@ -11,11 +11,12 @@ external load(LoaderOptions options);
 class LoaderOptions {
   external factory LoaderOptions({
     ///您申请的key值
-    String? key,
+    String key,
 
     /// JSAPI 版本号
-    String? version,
-    //同步加载的插件列表
-    List<String>? plugins,
+    String version,
+
+    /// 同步加载的插件列表
+    List<String> plugins,
   });
 }

@@ -1,10 +1,10 @@
 name: amap_core
 description: A new Flutter package.
-version: 1.0.0-nullsafety.2
+version: 0.1.0
 homepage: https://github.com/Spicely/amap_view/tree/core
 
 environment:
-  sdk: '>=2.12.0-133.2.beta <3.0.0'
+  sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
   flutter:
