@@ -1,30 +1,30 @@
 part of amap_core;
 
 class Location {
-  final double latitude;
+  final double? latitude;
 
-  final double longitude;
+  final double? longitude;
 
   /// 地址
-  final String address;
+  final String? address;
 
   /// 国家
-  final String country;
+  final String? country;
 
   /// 省
-  final String province;
+  final String? province;
 
   /// 市
-  final String city;
+  final String? city;
 
   /// 区
-  final String district;
+  final String? district;
 
   /// 街道
-  final String street;
+  final String? street;
 
   /// 精准度 [在web端直接返回0]
-  final double accuracy;
+  final double? accuracy;
 
   Location({
     this.latitude,

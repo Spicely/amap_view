@@ -1,7 +1,7 @@
 library amap_core;
 
-export 'src/web/amap.dart';
-export 'src/web/loader.dart';
+export 'src/web/amap.dart' if (dart.library.js) 'src/web/amap_web.dart';
+export 'src/web/loader.dart' if (dart.library.js) 'src/web/loader_web.dart';
 
 part 'src/search_poi/index.dart';
 part 'src/lat_lng/index.dart';

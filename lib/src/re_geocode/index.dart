@@ -2,43 +2,43 @@ part of amap_core;
 
 class ReGeocode {
   /// 建筑
-  final String building;
+  final String? building;
 
   /// 乡镇街道编码
-  final String towncode;
+  final String? towncode;
 
   /// 乡镇街道
-  final String township;
+  final String? township;
 
   /// 区域编码
-  final String adcode;
+  final String? adcode;
 
   /// 市
-  final String city;
+  final String? city;
 
   /// 城市编码
-  final String citycode;
+  final String? citycode;
 
   /// 社区
-  final String neighborhood;
+  final String? neighborhood;
 
   /// 国家
-  final String country;
+  final String? country;
 
   /// 格式化地址
-  final String formatAddress;
+  final String? formatAddress;
 
   /// 省/直辖市
-  final String province;
+  final String? province;
 
   /// 区
-  final String district;
+  final String? district;
 
   /// 门牌信息
-  final String streetNumber;
+  final String? streetNumber;
 
   /// 兴趣点信息 AMapPOI 数组
-  List<ReGeocode> pois = [];
+  List<ReGeocode?>? pois = [];
 
   ReGeocode({
     this.adcode,

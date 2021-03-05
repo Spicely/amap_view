@@ -1,8 +1,13 @@
+@JS('AMapLoader')
 library amap_loader;
+
+import 'package:js/js.dart';
 
 /// 高德地图 Loader js
 external load(LoaderOptions options);
 
+@JS()
+@anonymous
 class LoaderOptions {
   external factory LoaderOptions({
     ///您申请的key值

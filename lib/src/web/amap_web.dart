@@ -1,11 +1,17 @@
+@JS('AMap')
 library amap_web;
 
+import 'package:js/js.dart';
+
+@JS('Map')
 class AMap {
   external AMap(dynamic div, MapOptions opts);
   external plugin(dynamic name, void Function() callback);
   external addControl(dynamic name);
 }
 
+@JS()
+@anonymous
 class MapOptions {
   external LngLat get center;
   external set center(LngLat v);
@@ -16,6 +22,8 @@ class MapOptions {
   });
 }
 
+@JS()
+@anonymous
 class GeoOptions {
   external bool enableHighAccuracy;
   external int timeout;
@@ -23,12 +31,14 @@ class GeoOptions {
   external bool zoomToAccuracy;
 }
 
+@JS()
 class Geolocation {
   external Geolocation(GeoOptions opts);
   external getCurrentPosition(void Function(String status, GeolocationResult result) callback);
   external getCityInfo(void Function(String status, dynamic result) callback);
 }
 
+@JS()
 class GeolocationResult {
   external GeolocationResultPosition position;
   external GeolocationResultAddressComponent addressComponent;
@@ -36,6 +46,7 @@ class GeolocationResult {
   external String message;
 }
 
+@JS()
 class GeolocationResultAddressComponent {
   external String country;
   external String province;
@@ -44,11 +55,13 @@ class GeolocationResultAddressComponent {
   external String street;
 }
 
+@JS()
 class GeolocationResultPosition {
   external double lat;
   external double lng;
 }
 
+@JS()
 class LngLat {
   external num getLng();
   external num getLat();
