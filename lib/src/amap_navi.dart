@@ -41,16 +41,16 @@ class AmapNavi {
 
   /// 导航
   static Future<void> showRoute({
-    Poi start,
-    Poi end,
-    NaviType naviType,
+    Poi? start,
+    Poi? end,
+    required NaviType naviType,
 
     /// 最多三个
-    List<LatLng> wayList,
+    List<LatLng>? wayList,
   }) async {
     assert(wayList == null || wayList.length <= 3);
     await _channel.invokeMethod('navi#showRoute', {
-      "naviType": naviType.index ?? 0,
+      "naviType": naviType.index,
       "start": start?.toMap(),
       "end": end?.toMap(),
       "wayList": wayList?.map((i) => i.toJson()),

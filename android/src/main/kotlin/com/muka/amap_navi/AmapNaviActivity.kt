@@ -9,7 +9,6 @@ import com.amap.api.navi.AMapNaviView
 import com.amap.api.navi.AMapNaviViewListener
 import com.amap.api.navi.enums.NaviType
 import com.amap.api.navi.model.*
-import com.autonavi.tbt.TrafficFacilityInfo
 
 
 class AmapNaviActivity: Activity(), AMapNaviListener, AMapNaviViewListener {
@@ -53,7 +52,6 @@ class AmapNaviActivity: Activity(), AMapNaviListener, AMapNaviViewListener {
         mAMapNaviView?.onDestroy()
         //since 1.6.0 不再在naviview destroy的时候自动执行AMapNavi.stopNavi();请自行执行
         mAMapNavi?.stopNavi()
-        mAMapNavi?.destroy()
     }
 
     override fun onNaviInfoUpdate(p0: NaviInfo?) {
@@ -150,9 +148,6 @@ class AmapNaviActivity: Activity(), AMapNaviListener, AMapNaviViewListener {
     override fun hideLaneInfo() {
     }
 
-    override fun onNaviInfoUpdated(p0: AMapNaviInfo?) {
-    }
-
     override fun showModeCross(p0: AMapModelCross?) {
     }
 
@@ -178,9 +173,6 @@ class AmapNaviActivity: Activity(), AMapNaviListener, AMapNaviViewListener {
     }
 
     override fun OnUpdateTrafficFacility(p0: AMapNaviTrafficFacilityInfo?) {
-    }
-
-    override fun OnUpdateTrafficFacility(p0: TrafficFacilityInfo?) {
     }
 
     override fun onNaviRouteNotify(p0: AMapNaviRouteNotifyData?) {
