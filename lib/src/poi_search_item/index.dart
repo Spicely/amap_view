@@ -1,11 +1,8 @@
 part of amap_core;
 
-class PoiItem {
+class PoiSearchItem {
   /// POI全局唯一ID
   final String poiId;
-
-  /// 名称
-  final String name;
 
   /// 兴趣点类型
   final String typeDes;
@@ -67,9 +64,8 @@ class PoiItem {
   /// 经度（水平方向）
   final double longitude;
 
-  PoiItem(
+  PoiSearchItem(
     this.poiId,
-    this.name,
     this.typeDes,
     this.typeCode,
     this.address,
@@ -92,15 +88,14 @@ class PoiItem {
     this.longitude,
   );
 
-  factory PoiItem.fromJson(Map<dynamic, dynamic> json) => _$PoiItemFromJson(json);
+  factory PoiSearchItem.fromJson(Map<dynamic, dynamic> json) => _$PoiSearchItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PoiItemToJson(this);
+  Map<String, dynamic> toJson() => _$PoiSearchItemToJson(this);
 }
 
-PoiItem _$PoiItemFromJson(Map<dynamic, dynamic> json) {
-  return PoiItem(
+PoiSearchItem _$PoiSearchItemFromJson(Map<dynamic, dynamic> json) {
+  return PoiSearchItem(
       json['poiId'] as String,
-      json['name'] as String,
       json['typeDes'] as String,
       json['typeCode'] as String,
       json['address'] as String,
@@ -123,9 +118,8 @@ PoiItem _$PoiItemFromJson(Map<dynamic, dynamic> json) {
       (json['longitude'] as num).toDouble());
 }
 
-Map<String, dynamic> _$PoiItemToJson(PoiItem instance) => <String, dynamic>{
+Map<String, dynamic> _$PoiSearchItemToJson(PoiSearchItem instance) => <String, dynamic>{
       'poiId': instance.poiId,
-      'name': instance.name,
       'typeDes': instance.typeDes,
       'typeCode': instance.typeCode,
       'address': instance.address,
