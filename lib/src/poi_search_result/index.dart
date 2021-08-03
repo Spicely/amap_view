@@ -9,8 +9,11 @@ class PoiSearchResult {
 
   final List<String> searchSuggestionKeywords;
 
+  final List<String> searchSuggestionCitys;
+
   const PoiSearchResult(
     this.searchSuggestionKeywords,
+    this.searchSuggestionCitys,
     this.pageCount,
     this.query,
     this.pois,
@@ -22,7 +25,7 @@ class PoiSearchResult {
 }
 
 class PoiSearchQuery {
-  final LatLng location;
+  final LatLng? location;
 
   final String building;
 
@@ -65,7 +68,7 @@ class PoiSearchQuery {
 
 PoiSearchQuery _$PoiSearchQueryFromJson(Map<dynamic, dynamic> json) {
   return PoiSearchQuery(
-    json['location'] as LatLng,
+    json['location'] as LatLng?,
     json['building'] as String,
     json['category'] as String,
     json['city'] as String,
@@ -80,7 +83,7 @@ PoiSearchQuery _$PoiSearchQueryFromJson(Map<dynamic, dynamic> json) {
 }
 
 Map<String, dynamic> _$PoiSearchQueryToJson(PoiSearchQuery instance) => <String, dynamic>{
-      'location': instance.location.toJson(),
+      'location': instance.location?.toJson(),
       'building': instance.building,
       'category': instance.category,
       'city': instance.city,
@@ -95,10 +98,11 @@ Map<String, dynamic> _$PoiSearchQueryToJson(PoiSearchQuery instance) => <String,
 
 PoiSearchResult _$PoiSearchResultFromJson(Map<dynamic, dynamic> json) {
   return PoiSearchResult(
-    json['searchSuggestionKeywords'] as List<String>,
+    (json['searchSuggestionKeywords'] as List<Object?>).map((e) => e.toString()).toList(),
+    (json['searchSuggestionCitys'] as List<Object?>).map((e) => e.toString()).toList(),
     json['pageCount'] as int,
     PoiSearchQuery.fromJson(json['query'] as Map<dynamic, dynamic>),
-    (json['pois'] as List<Map<dynamic, dynamic>>).map((e) => PoiSearchItem.fromJson(e)).toList(),
+    (json['pois'] as List).map((e) => PoiSearchItem.fromJson(e)).toList(),
   );
 }
 

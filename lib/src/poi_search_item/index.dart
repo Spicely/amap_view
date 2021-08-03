@@ -58,11 +58,10 @@ class PoiSearchItem {
   /// 所在商圈
   final String businessArea;
 
-  /// 纬度（垂直方向）
-  final double latitude;
+  final LatLng latLonPoint;
 
-  /// 经度（水平方向）
-  final double longitude;
+  /// 返回POI的名称。
+  final String title;
 
   PoiSearchItem(
     this.poiId,
@@ -84,8 +83,8 @@ class PoiSearchItem {
     this.direction,
     this.isIndoorMap,
     this.businessArea,
-    this.latitude,
-    this.longitude,
+    this.latLonPoint,
+    this.title,
   );
 
   factory PoiSearchItem.fromJson(Map<dynamic, dynamic> json) => _$PoiSearchItemFromJson(json);
@@ -95,27 +94,28 @@ class PoiSearchItem {
 
 PoiSearchItem _$PoiSearchItemFromJson(Map<dynamic, dynamic> json) {
   return PoiSearchItem(
-      json['poiId'] as String,
-      json['typeDes'] as String,
-      json['typeCode'] as String,
-      json['address'] as String,
-      json['tel'] as String,
-      json['distance'] as int,
-      json['parkingType'] as String,
-      json['shopID'] as String,
-      json['postcode'] as String,
-      json['website'] as String,
-      json['email'] as String,
-      json['province'] as String,
-      json['provinceCode'] as String,
-      json['city'] as String,
-      json['cityCode'] as String,
-      json['adCode'] as String,
-      json['direction'] as String,
-      json['isIndoorMap'] as bool,
-      json['businessArea'] as String,
-      (json['latitude'] as num).toDouble(),
-      (json['longitude'] as num).toDouble());
+    json['poiId'] as String,
+    json['typeDes'] as String,
+    json['typeCode'] as String,
+    json['address'] as String,
+    json['tel'] as String,
+    json['distance'] as int,
+    json['parkingType'] as String,
+    json['shopID'] as String,
+    json['postcode'] as String,
+    json['website'] as String,
+    json['email'] as String,
+    json['province'] as String,
+    json['provinceCode'] as String,
+    json['city'] as String,
+    json['cityCode'] as String,
+    json['adCode'] as String,
+    json['direction'] as String,
+    json['isIndoorMap'] as bool,
+    json['businessArea'] as String,
+    LatLng(json['latLonPoint']['latitude'], json['latLonPoint']['longitude']),
+    json['title'] as String,
+  );
 }
 
 Map<String, dynamic> _$PoiSearchItemToJson(PoiSearchItem instance) => <String, dynamic>{
@@ -138,6 +138,6 @@ Map<String, dynamic> _$PoiSearchItemToJson(PoiSearchItem instance) => <String, d
       'direction': instance.direction,
       'isIndoorMap': instance.isIndoorMap,
       'businessArea': instance.businessArea,
-      'longitude': instance.longitude,
-      'latitude': instance.latitude,
+      'latLonPoint': instance.latLonPoint.toJson(),
+      'title': instance.title,
     };
